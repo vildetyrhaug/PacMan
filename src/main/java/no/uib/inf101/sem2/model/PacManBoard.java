@@ -41,37 +41,27 @@ public class PacManBoard extends Grid<Character> {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 
-                if (row == 1 && (col == 5 || col == 15)){
+                if ((row == 1 || row == 9) && (col == 5 || col == 15)){
                     set(new CellPosition(row, col), '#');
                 }
-                if (row == 2 && (col == 2 || col == 3 || col == 5 || col == 7 || col == 8 || col == 9 || 
-                col == 10 || col == 11 || col == 12 || col == 13 || col == 15 || col == 17 || col == 18)) {
+                if ((row == 2 || row == 8) && (col == 2 || col == 3 || col == 5 || col > 6 && col < 14 
+                 || col == 15 || col == 17 || col == 18)) {
                     set(new CellPosition(row, col), '#');
                 }
-                if (row == 3 && (col == 2 || col == 18)){
+                if ((row == 3 || row == 7) && (col == 2 || col == 18)){
                     set(new CellPosition(row, col), '#');
                 }
-                if (row == 4 && (col == 2 || col == 4 || col == 5 || col == 7 || col == 8 || col == 9 ||
-                 col == 11 || col == 12 || col == 13 || col == 15 || col == 16 || col == 18)) {
+                if (row == 4 && (col == 2 || col == 4 || col == 5 || col > 6 && col < 10 
+                 || col > 10 && col < 14 || col == 15 || col == 16 || col == 18)) {
                     set(new CellPosition(row, col), '#');
                 }
                 if (row == 5 && (col == 7 || col == 13)) {
                     set(new CellPosition(row, col), '#');
                 }
-                if (row == 6 && (col == 2 || col == 4 || col == 5 || col == 7 || col == 8 || col == 9 ||
-                col == 10 || col == 11 || col == 12 || col == 13 || col == 15 || col == 16 || col == 18)) {
+                if (row == 6 && (col == 2 || col == 4 || col == 5 || col > 6 && col < 14 
+                 || col == 15 || col == 16 || col == 18)) {
                     set(new CellPosition(row, col), '#');
                 }
-                if (row == 7 && (col == 2 || col == 18)){
-                    set(new CellPosition(row, col), '#');
-                }
-                if (row == 8 && (col == 2 || col == 3 || col == 5 || col == 7 || col == 8 || col == 9 || 
-                col == 10 || col == 11 || col == 12 || col == 13 || col == 15 || col == 17 || col == 18)) {
-                    set(new CellPosition(row, col), '#');
-                }
-                if (row == 9 && (col == 5 || col == 15)){
-                    set(new CellPosition(row, col), '#');
-                } 
         }
     }
     
