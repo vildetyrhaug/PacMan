@@ -1,4 +1,4 @@
-package no.uib.inf101.sem2.pacMan.view;
+package no.uib.inf101.sem2.view;
 
 import java.awt.geom.Rectangle2D;
 

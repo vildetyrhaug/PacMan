@@ -1,10 +1,9 @@
-package no.uib.inf101.sem2.pacMan.view;
+package no.uib.inf101.sem2.view;
 
 import java.awt.Color;
 
-
 public interface ColorTheme {
-    
+       
         /* 
         * Returnerer fargen til cellen med gitt verdi.
         * @param c  karakteren i cellen
@@ -15,30 +14,33 @@ public interface ColorTheme {
     
         /* 
         * @return fargen til rammen rundt brettet 
-        * return verdien burde ikke være null men det kan være en gjennomsiktig ramme
-        *     med (new Color(0, 0, 0, 0) 
+        * retur-verdien skal være blå
         */
     Color getFrameColor(); 
         
-
+        
+        /* 
+        * @return fargen til veggen 
+        * farge skal være blå
+        */
+    Color getWallColor();
     
         /* 
         * @return fargen til bakgrunnen 
-        * farge kan ikke være gjennomsiktig
-        * farge kan være null --> da er bakgrunnen Java bakgrunnsfarge
+        * farge skal være svart
         */
     Color getBackgroundColor(); 
-        
+    
         /* 
         * @return fargen til den gjennomsiktige overlayen når spillet er game over
         * farge bør være new Color(0, 0, 0, 128)
         */
-    Color getSeethroughColor();
+    //Color getSeethroughColor();
 
         /* 
         * @return fargen på Game over teksten 
         * farge skal ikke være null eller gjennomsiktig.
         */
-    Color getGameOverColor();
-
+    //Color getGameOverColor();
+ 
 }
