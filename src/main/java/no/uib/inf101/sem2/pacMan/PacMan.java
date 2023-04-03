@@ -22,7 +22,7 @@ public class PacMan implements Iterable<GridCell<Character>> {
         return new PacMan(new CellPosition(7, 10));
     }
 
-    public PacMan shiftedby(int dx, int dy) {
+    public PacMan shiftedBy(int dx, int dy) {
         // Returnerer en ny pacman som er flyttet dx rader nedover og dy kolonner til høyre
         CellPosition newPos = new CellPosition(pos.row() + dx, pos.col() + dy);
         PacMan copy = new PacMan(newPos);
