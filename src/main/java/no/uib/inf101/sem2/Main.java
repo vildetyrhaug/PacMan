@@ -4,13 +4,18 @@ import javax.swing.JFrame;
 
 import no.uib.inf101.sem2.model.PacManBoard;
 import no.uib.inf101.sem2.model.PacManModel;
+import no.uib.inf101.sem2.pacMan.PacManFactory;
+import no.uib.inf101.sem2.pacMan.RandomPacManFactory;
 import no.uib.inf101.sem2.view.PacManView;
 
 public class Main {
   public static void main(String[] args) {
    
     PacManBoard board = new PacManBoard(11, 21);
-    PacManModel model = new PacManModel(board);
+
+    PacManFactory factory = new RandomPacManFactory();
+
+    PacManModel model = new PacManModel(board, factory);
     PacManView view = new PacManView(model);
 
 

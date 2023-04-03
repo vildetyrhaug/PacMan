@@ -23,7 +23,7 @@ public interface ViewablePacManModel {
             når det itereres over, 
             gir alle posisjonene på brikken som faller med tilhørende symbol.
          */
-    //Iterable<GridCell<Character>> getTilesOnFallingPiece();
+    Iterable<GridCell<Character>> getTileOnMovingPacMan();
     
     
         /* 

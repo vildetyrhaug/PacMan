@@ -56,8 +56,8 @@ public class PacManView extends JPanel {
     CellPositionToPixelConverter position = new CellPositionToPixelConverter(rectangle, model.getDimension(), 2);
     drawCells(canvas, model.getTilesOnBoard(), position, color);
 
-    /* // Tegner falling piece
-    drawCells(canvas, model.getTilesOnFallingPiece(), position, color); */
+    // Tegner movingPacMan piece
+    drawCells(canvas, model.getTileOnMovingPacMan(), position, color);
 
     /* if (model.getGameState()== GameState.GAME_OVER) {
       // Lager en grå firkant over hele brettet

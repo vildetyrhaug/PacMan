@@ -12,8 +12,9 @@ public class DefaultColorTheme implements ColorTheme {
     public Color getCellColor(Character c) {
         Color color = switch(c) {
             case '#' -> Color.BLUE;
-            case 'o' -> Color.YELLOW;
+            case 'o' -> Color.GREEN;
             case ' ' -> Color.BLACK;
+            case 'P' -> Color.YELLOW;
 
             default -> throw new IllegalArgumentException(
                 "No available color for '" + c + "'");
