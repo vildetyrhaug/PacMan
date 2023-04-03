@@ -8,4 +8,12 @@ public interface ControllablePacManModel {
      */
     public boolean movePacMan(int deltaRow, int deltaCol);
 
+    public void movePacManLeft();
+
+    public void movePacManRight();
+
+    public void movePacManUp();
+
+    public void movePacManDown();
+    
 }

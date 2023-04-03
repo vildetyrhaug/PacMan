@@ -63,5 +63,42 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         return true;
     }
 
+    @Override
+    public void movePacManLeft() {
+        PacMan newPiece = this.movingPacMan.shiftedBy(0, -1);
+        while (this.legalPlacement(newPiece)) {
+            this.movingPacMan = newPiece;
+            newPiece = this.movingPacMan.shiftedBy(0, 1);
+        }
+    }
+
+    @Override
+    public void movePacManRight() {
+        PacMan newPiece = this.movingPacMan.shiftedBy(0, 1);
+        while (this.legalPlacement(newPiece)) {
+            this.movingPacMan = newPiece;
+            newPiece = this.movingPacMan.shiftedBy(0, 1);
+        }
+    }
+
+    @Override
+    public void movePacManUp() {
+        PacMan newPiece = this.movingPacMan.shiftedBy(-1, 0);
+        while (this.legalPlacement(newPiece)) {
+            this.movingPacMan = newPiece;
+            newPiece = this.movingPacMan.shiftedBy(-1, 0);
+        }        
+    }
+
+    @Override
+    public void movePacManDown() {
+        PacMan newPiece = this.movingPacMan.shiftedBy(1, 0);
+        while (this.legalPlacement(newPiece)) {
+            this.movingPacMan = newPiece;
+            newPiece = this.movingPacMan.shiftedBy(1, 0);
+        }
+    
+    }
+
 
 }

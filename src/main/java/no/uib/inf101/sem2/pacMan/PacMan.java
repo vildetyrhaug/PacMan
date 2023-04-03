@@ -1,7 +1,6 @@
 package no.uib.inf101.sem2.pacMan;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
