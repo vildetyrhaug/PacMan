@@ -49,13 +49,13 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
     
     public boolean legalPlacement(PacMan newPiece) {
-        // sjekker om en tetromino kan plasseres på brettet
+        // sjekker om en pacman kan plasseres på brettet
         // returnerer true hvis det er lovlig, false ellers
         for (GridCell<Character> cell : newPiece) {
             if (!board.positionIsOnGrid(cell.pos())) {
                 return false;
             }
-            if (board.get(cell.pos()) != '-') {
+            if (board.get(cell.pos()) != ' ') {
                 return false;
             }
         }
@@ -67,7 +67,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         PacMan newPiece = this.movingPacMan.shiftedBy(0, -1);
         while (this.legalPlacement(newPiece)) {
             this.movingPacMan = newPiece;
-            newPiece = this.movingPacMan.shiftedBy(0, 1);
+            newPiece = this.movingPacMan.shiftedBy(0, -1);
         }
     }
 
