@@ -61,7 +61,6 @@ public class PacManView extends JPanel {
     drawCells(canvas, pacManModel.getTilesOnBoard(), position, color);
 
     // Tegner movingPacMan piece 
-    Ellipse2D pacMan = new Ellipse2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight);
     drawPacMan(canvas, pacManModel.getTileOnMovingPacMan(), position, color);
 
 

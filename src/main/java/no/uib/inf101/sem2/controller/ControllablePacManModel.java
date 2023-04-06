@@ -1,5 +1,7 @@
 package no.uib.inf101.sem2.controller;
 
+import no.uib.inf101.sem2.model.GameState;
+
 public interface ControllablePacManModel {
      /* 
      * brukes for å flytte brikken rundt på brettet 
@@ -27,5 +29,23 @@ public interface ControllablePacManModel {
      * brukes for å flytte brikken nedover på brettet
      */
     public void movePacManDown();
+
+    /* 
+     * @return en GameState som indikerer om spillet er aktivt, eller GameOver
+     */
+    GameState getGameState();
+
+    /* 
+     * en metode som henter ut hvor mange millisekunder (som integer) 
+     * det skal være mellom hvert klokkeslag 
+     */
+    Integer getTimerDelay();
+
+    /* 
+     * kalles hver gang klokken slår.
+     */
+    void clockTick();
+
+
     
 }
