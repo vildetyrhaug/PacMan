@@ -11,26 +11,6 @@ public interface ControllablePacManModel {
     public boolean movePacMan(int deltaRow, int deltaCol);
 
     /* 
-     * brukes for å flytte brikken til venstre på brettet
-     */
-    public void movePacManLeft();
-
-    /* 
-     * brukes for å flytte brikken til høyre på brettet
-     */
-    public void movePacManRight();
-
-    /* 
-     * brukes for å flytte brikken oppover på brettet
-     */
-    public void movePacManUp();
-
-    /* 
-     * brukes for å flytte brikken nedover på brettet
-     */
-    public void movePacManDown();
-
-    /* 
      * @return en GameState som indikerer om spillet er aktivt, eller GameOver
      */
     GameState getGameState();

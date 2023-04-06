@@ -1,5 +1,7 @@
 package no.uib.inf101.sem2.model;
 
+import java.awt.event.KeyEvent;
+
 import no.uib.inf101.sem2.controller.ControllablePacManModel;
 import no.uib.inf101.sem2.controller.PacManController;
 import no.uib.inf101.sem2.grid.CellPosition;
@@ -16,7 +18,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     PacMan movingPacMan;
     GameState gameState;
 
-    
+    PacManController controller;
 
     public PacManModel(PacManBoard board, PacManFactory factory) {
         this.board = board;
@@ -78,12 +80,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         } return true;
     }
         return false;
-        /* PacMan newPiece = this.movingPacMan.shiftedBy(deltaRow, deltaCol);
-        if (this.legalPlacement(newPiece)) {
-            this.movingPacMan = newPiece;
-            return true;
-        }
-        return false; */
     }
     
     public boolean legalPlacement(PacMan newPiece) {
@@ -101,43 +97,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
 
     @Override
-    public void movePacManLeft() {
-        PacMan newPiece = this.movingPacMan.shiftedBy(0, -1);
-        while (this.legalPlacement(newPiece)) {
-            this.movingPacMan = newPiece;
-            newPiece = this.movingPacMan.shiftedBy(0, -1);
-        }
-    }
-
-    @Override
-    public void movePacManRight() {
-        PacMan newPiece = this.movingPacMan.shiftedBy(0, 1);
-        while (this.legalPlacement(newPiece)) {
-            this.movingPacMan = newPiece;
-            newPiece = this.movingPacMan.shiftedBy(0, 1);
-        }
-    }
-
-    @Override
-    public void movePacManUp() {
-        PacMan newPiece = this.movingPacMan.shiftedBy(-1, 0);
-        while (this.legalPlacement(newPiece)) {
-            this.movingPacMan = newPiece;
-            newPiece = this.movingPacMan.shiftedBy(-1, 0);
-        }        
-    }
-
-    @Override
-    public void movePacManDown() {
-        PacMan newPiece = this.movingPacMan.shiftedBy(1, 0);
-        while (this.legalPlacement(newPiece)) {
-            this.movingPacMan = newPiece;
-            newPiece = this.movingPacMan.shiftedBy(1, 0);
-        }
-    
-    }
-
-    @Override
     public Integer getTimerDelay() {
         return 1000;
     }
@@ -150,6 +109,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     @Override
     public void clockTick() {
         // move pac-man to the next position
-
+        
       }
 }

@@ -16,12 +16,13 @@ public class PacManController implements java.awt.event.KeyListener {
     Timer timer;
 
 
-
     public PacManController(ControllablePacManModel model, PacManView pacManView) {
         pacManView.setFocusable(true);
         
         this.pacManView = pacManView;
         this.model = model;
+
+        //timer
         this.timer = new Timer(model.getTimerDelay(), this::clockTick);;
         this.timer.start();
 
@@ -38,7 +39,6 @@ public class PacManController implements java.awt.event.KeyListener {
                 // model.movePacManLeft();
                 // pacManView.repaint();
                 if (model.movePacMan(0, -1)){
-                    System.out.println("left");
                     pacManView.repaint();
             }
         }
@@ -48,7 +48,6 @@ public class PacManController implements java.awt.event.KeyListener {
                 // model.movePacManRight();
                 // pacManView.repaint();
                 if (model.movePacMan(0, 1)){
-                    System.out.println("RIGHT");
                     pacManView.repaint();
             }}
             else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
