@@ -7,6 +7,7 @@ public class DefaultColorTheme implements ColorTheme {
     private Color frameColor = Color.BLACK;
     private Color wallColor = Color.BLUE;
     private Color backgroundColor = Color.BLUE;
+    private Color pacManColor = Color.YELLOW;
     
     @Override
     public Color getCellColor(Character c) {
@@ -34,6 +35,11 @@ public class DefaultColorTheme implements ColorTheme {
     @Override
     public Color getBackgroundColor() {
         return backgroundColor;
+    }
+
+    @Override
+    public Color getPacManColor() {
+        return pacManColor;
     }
     
 }

@@ -5,11 +5,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 
 import no.uib.inf101.sem2.grid.GridCell;
+import no.uib.inf101.sem2.model.PacManModel;
 
 
 
@@ -28,7 +30,7 @@ public class PacManView extends JPanel {
 
       this.pacManModel = pacManModel;
       this.color = new DefaultColorTheme();
-      
+
       this.setBackground(getBackground());
     }
   
@@ -58,8 +60,10 @@ public class PacManView extends JPanel {
     CellPositionToPixelConverter position = new CellPositionToPixelConverter(rectangle, pacManModel.getDimension(), 2);
     drawCells(canvas, pacManModel.getTilesOnBoard(), position, color);
 
-    // Tegner movingPacMan piece
-    drawCells(canvas, pacManModel.getTileOnMovingPacMan(), position, color);
+    // Tegner movingPacMan piece 
+    Ellipse2D pacMan = new Ellipse2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight);
+    drawPacMan(canvas, pacManModel.getTileOnMovingPacMan(), position, color);
+
 
     /* if (model.getGameState()== GameState.GAME_OVER) {
       // Lager en grå firkant over hele brettet
@@ -87,4 +91,17 @@ public class PacManView extends JPanel {
           canvas.fill(rectangle);
           }
       }
+      
+      private static void drawPacMan(Graphics2D canvas, Iterable<GridCell<Character>> gridCellCharacter, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
+        // itererer over cellene og tegner dem
+        for(GridCell<Character> cell : gridCellCharacter){
+            Ellipse2D pacMan = cellPosToPixConvert.getBoundsForPacMan(cell.pos());
+            Color cellColor = colorTheme.getPacManColor();
+            
+            canvas.setColor(cellColor);
+            canvas.fill(pacMan);
+            }
+        } 
+        
+  
   }

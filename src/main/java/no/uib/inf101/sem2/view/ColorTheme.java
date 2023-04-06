@@ -30,6 +30,8 @@ public interface ColorTheme {
         * farge skal være svart
         */
     Color getBackgroundColor(); 
+
+    Color getPacManColor();
     
         /* 
         * @return fargen til den gjennomsiktige overlayen når spillet er game over

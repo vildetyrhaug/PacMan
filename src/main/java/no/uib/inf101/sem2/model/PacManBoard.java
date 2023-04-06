@@ -12,9 +12,6 @@ public class PacManBoard extends Grid<Character> {
     // 'o' is a dot
     // 'P' is a player
 
-    
-    
-
     public PacManBoard(int rows, int cols) {
         super(rows, cols);
         
