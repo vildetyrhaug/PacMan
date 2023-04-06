@@ -33,7 +33,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public Iterable<GridCell<Character>> getTileOnMovingPacMan() {
-    
         return this.movingPacMan;
     }
 

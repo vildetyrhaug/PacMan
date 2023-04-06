@@ -15,19 +15,21 @@ import no.uib.inf101.sem2.grid.GridCell;
 
 public class PacManView extends JPanel {
     
-    private ViewablePacManModel model;
+    private ViewablePacManModel pacManModel;
     private ColorTheme color;
     
     private static final double OUTERMARGIN = 10;
 
 
     // KONSTRUKTØR
-    public PacManView(ViewablePacManModel model) {
-      this.model = model;
+    public PacManView(ViewablePacManModel pacManModel) {
+      this.setFocusable(true);
       this.setPreferredSize(new Dimension(700, 300));
-      this.color = new DefaultColorTheme();
-      this.setBackground(getBackground());
 
+      this.pacManModel = pacManModel;
+      this.color = new DefaultColorTheme();
+      
+      this.setBackground(getBackground());
     }
   
     // METODER
@@ -53,11 +55,11 @@ public class PacManView extends JPanel {
     canvas.fill(rectangle);
     
     // Tegner cellene
-    CellPositionToPixelConverter position = new CellPositionToPixelConverter(rectangle, model.getDimension(), 2);
-    drawCells(canvas, model.getTilesOnBoard(), position, color);
+    CellPositionToPixelConverter position = new CellPositionToPixelConverter(rectangle, pacManModel.getDimension(), 2);
+    drawCells(canvas, pacManModel.getTilesOnBoard(), position, color);
 
     // Tegner movingPacMan piece
-    drawCells(canvas, model.getTileOnMovingPacMan(), position, color);
+    drawCells(canvas, pacManModel.getTileOnMovingPacMan(), position, color);
 
     /* if (model.getGameState()== GameState.GAME_OVER) {
       // Lager en grå firkant over hele brettet
@@ -80,7 +82,6 @@ public class PacManView extends JPanel {
       for(GridCell<Character> cell : gridCellCharacter){
           Rectangle2D rectangle = cellPosToPixConvert.getBoundsForCell(cell.pos());
           Color cellColor = colorTheme.getCellColor(cell.value());
-          
           
           canvas.setColor(cellColor);
           canvas.fill(rectangle);
