@@ -1,6 +1,7 @@
 package no.uib.inf101.sem2.controller;
 
 import no.uib.inf101.sem2.model.GameState;
+import no.uib.inf101.sem2.model.PacDirection;
 
 public interface ControllablePacManModel {
      /* 
@@ -8,7 +9,7 @@ public interface ControllablePacManModel {
      * Metoden skal returnere en boolean som forteller 
      * hvorvidt flyttingen faktisk ble gjennomført eller ikke.
      */
-    public boolean movePacMan(int deltaRow, int deltaCol);
+    public boolean movePacMan(PacDirection direction);
 
     /* 
      * @return en GameState som indikerer om spillet er aktivt, eller GameOver

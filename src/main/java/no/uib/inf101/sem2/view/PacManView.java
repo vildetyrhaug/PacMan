@@ -11,7 +11,6 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JPanel;
 
 import no.uib.inf101.sem2.grid.GridCell;
-import no.uib.inf101.sem2.model.PacManModel;
 
 
 
