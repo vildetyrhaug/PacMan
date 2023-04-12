@@ -28,5 +28,11 @@ public interface ControllablePacManModel {
     void clockTick();
 
 
+    /* 
+     * setter retningen til PacMan
+     */
+    void setDirection(PacDirection left);
+
+
     
 }

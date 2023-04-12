@@ -15,7 +15,6 @@ public class PacManController implements java.awt.event.KeyListener {
     ControllablePacManModel model;
     PacManView pacManView;
     Timer timer;
-    PacDirection direction;
 
 
     public PacManController(ControllablePacManModel model, PacManView pacManView) {
@@ -23,8 +22,6 @@ public class PacManController implements java.awt.event.KeyListener {
         
         this.pacManView = pacManView;
         this.model = model;
-
-        PacDirection direction = PacDirection.CENTER;
 
         //timer
         this.timer = new Timer(model.getTimerDelay(), this::clockTick);;
@@ -41,35 +38,27 @@ public class PacManController implements java.awt.event.KeyListener {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     // Left arrow was pressed
                     // move the pacMan left
-                    direction = PacDirection.LEFT;
-                    System.out.println("left, direction:" + direction);
-                    model.movePacMan(direction);
+                    model.setDirection(PacDirection.LEFT);
                     pacManView.repaint();
-                
             }
                 else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     // Right arrow was pressed
                     // move the pacMan right
-                    direction = PacDirection.RIGHT;
-                    System.out.println("right, direction:" + direction);
-                    model.movePacMan(direction);
+                    model.setDirection(PacDirection.RIGHT);
                     pacManView.repaint();
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     // Down arrow was pressed
                     // move the pacMan down
-                    direction = PacDirection.DOWN;
-                    model.movePacMan(direction);
+                    model.setDirection(PacDirection.DOWN);
                     pacManView.repaint();
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_UP) {
                     // Up arrow was pressed
                     // move the pacMan up
-                    direction = PacDirection.UP;
-                    model.movePacMan(direction);
+                    model.setDirection(PacDirection.UP);
                     pacManView.repaint();
-                
-            }}}
+                }}}
 
     public void updateTimer() {
         int delay = model.getTimerDelay();

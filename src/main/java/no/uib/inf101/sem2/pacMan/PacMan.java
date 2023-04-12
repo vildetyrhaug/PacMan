@@ -28,35 +28,6 @@ public class PacMan implements Iterable<GridCell<Character>> {
         return copy;
     }
 
-    public void movePacMan() {
-        // Flytter pacman
-
-    }
-
-    public void eatDot() {
-        // Spiser en dot
-    }
-
-    public void eatPowerPellet() {
-        // Spiser en powerpellet
-    }
-
-    public void die() {
-        // Dør
-    }
-
-    public void win() {
-        // Vinner
-    }
-
-    public void lose() {
-        // Taper
-    }
-
-    public void reset() {
-        // Resetter
-    }
-
     @Override
     public Iterator<GridCell<Character>> iterator() {
         // returnerer en iterator over alle cellene i pacman

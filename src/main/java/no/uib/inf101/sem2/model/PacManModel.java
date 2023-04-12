@@ -2,10 +2,12 @@ package no.uib.inf101.sem2.model;
 
 import no.uib.inf101.sem2.controller.ControllablePacManModel;
 import no.uib.inf101.sem2.controller.PacManController;
+import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
 import no.uib.inf101.sem2.grid.GridDimension;
 import no.uib.inf101.sem2.pacMan.PacMan;
 import no.uib.inf101.sem2.pacMan.PacManFactory;
+import no.uib.inf101.sem2.view.PacManView;
 import no.uib.inf101.sem2.view.ViewablePacManModel;
 
 public class PacManModel implements ViewablePacManModel, ControllablePacManModel{
@@ -78,11 +80,12 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         // DOWN:
         if(deltaRow == 1 && deltaCol == 0){
             PacMan newPiece = this.movingPacMan.shiftedBy(1, 0);
-            while (this.legalPlacement(newPiece)) {
+            if (this.legalPlacement(newPiece)) {
                 this.movingPacMan = newPiece;
         } 
         return true;
     }
+        System.out.print("movePacMan False");
         return false;
     }
 
@@ -106,7 +109,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public Integer getTimerDelay() {
-        return 1000;
+        return 500;
     }
 
     @Override
@@ -117,8 +120,24 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     @Override
     public void clockTick() {
         // interact with pacDirection to move the piece
-        System.out.println("clockTick called");
-        System.out.println("clocktick: direction: " + this.getDirection());
-        movePacMan(this.getDirection());
+        if (movePacMan(this.getDirection())){
+            this.direction = this.getDirection();
+        }
+        else {
+        } 
       }
+
+    @Override
+    public void setDirection(PacDirection direction) {
+        // check if neighbor is empty 
+        // if so, change direction
+        // if not, don´t change direction
+        
+        if (legalPlacement(this.movingPacMan.shiftedBy(direction.getDx(), direction.getDy())))
+            this.direction = direction;
+        else {
+            System.out.println("Illegal move");
+        }
+
+    }
 }

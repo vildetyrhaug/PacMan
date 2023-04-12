@@ -91,6 +91,27 @@ public enum PacDirection {
 		};
 	}
 
+	public PacDirection turnDown() {
+		return switch (this) {
+			case UP -> PacDirection.DOWN;
+			case DOWN -> PacDirection.DOWN;
+			case RIGHT -> PacDirection.DOWN;
+			case LEFT -> PacDirection.DOWN;
+			case CENTER -> PacDirection.DOWN;
+
+		};
+	}
+
+	public PacDirection turnUP() {
+		return switch (this) {
+			case UP -> PacDirection.UP;
+			case DOWN -> PacDirection.UP;
+			case RIGHT -> PacDirection.UP;
+			case LEFT -> PacDirection.UP;
+			case CENTER -> PacDirection.UP;
+		};
+	}
+
 	/* 
 	 * A method that will call move at a specified time interval,
 	 * and give different arguments to movePacMan depending on what
