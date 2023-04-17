@@ -48,48 +48,26 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         return this.movingPacMan;
     }
 
+    public void move(PacDirection direction){
+        switch(direction){
+            case LEFT -> movePacMan(0,-1);
+            case RIGHT -> movePacMan(0,1);
+            case UP -> movePacMan(-1,0);
+            case DOWN -> movePacMan(1,0);
+        }
+    }
+
     @Override
-    public boolean movePacMan(PacDirection direction) {
+    public void movePacMan(int dx, int dy) {
         // moves the piece around on the board
         // returns a boolean indicating whether the move was successful or not.
-        int deltaRow = direction.getDx();
-        int deltaCol = direction.getDy();
-        System.out.println("movePacMan, direction:" + direction + " deltaRow:" 
-        + deltaRow + " deltaCol:" + deltaCol);
-        // LEFT:
-        if(deltaRow == 0 && deltaCol == -1){
-            PacMan newPiece = this.movingPacMan.shiftedBy(0, -1);
+ 
+            PacMan newPiece = this.movingPacMan.shiftedBy(dx, dy);
             if (this.legalPlacement(newPiece)) {
                 this.movingPacMan = newPiece;
-        }          
-        return true;
-} 
-        // RIGHT:
-        if(deltaRow == 0 && deltaCol == 1){
-            PacMan newPiece = this.movingPacMan.shiftedBy(0, 1);
-            if (this.legalPlacement(newPiece)) {
-                this.movingPacMan = newPiece;
-        }            
-        return true;
-}
-        // UP:
-        if(deltaRow == -1 && deltaCol == 0){
-            PacMan newPiece = this.movingPacMan.shiftedBy(-1, 0);
-            if (this.legalPlacement(newPiece)) {
-                this.movingPacMan = newPiece;
-        } 
-        return true;
-    } 
-        // DOWN:
-        if(deltaRow == 1 && deltaCol == 0){
-            PacMan newPiece = this.movingPacMan.shiftedBy(1, 0);
-            if (this.legalPlacement(newPiece)) {
-                this.movingPacMan = newPiece;
-        } 
-        return true;
-    }
-        return false;
-    }
+                this.direction = this.getDirection();
+
+        }}          
 
     public PacDirection getDirection() {
         return direction.currentDirection();
@@ -102,7 +80,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             if (!board.positionIsOnGrid(cell.pos())) {
                 return false;
             }
-            if (board.get(cell.pos()) != ' ') {
+            if (board.get(cell.pos()) != ' ' && board.get(cell.pos()) != 'P' && board.get(cell.pos()) != 'o') {
                 return false;
             }
         }
@@ -122,10 +100,13 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     @Override
     public void clockTick() {
         // interact with pacDirection to move the piece
-        if (movePacMan(this.getDirection())){
+        /* if (movePacMan(this.getDirection())){
             this.direction = this.getDirection();
-        }
-      }
+        } */
+        move(direction);
+        // check if the piece is on a pellet
+        pelletInPos();
+    }
 
     @Override
     public void setDirection(PacDirection direction) {
@@ -137,4 +118,18 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             this.direction = direction;
         
     }
-}
+
+public void pelletInPos(){
+    // run through the list of pellets and check if the movingPacMan is on the same position as a pellet
+    // if so, add 10 points and change pellet in board to empty space
+    // if not, do nothing
+    for (GridCell<Character> pelletCell : board.getPellets()){
+        for (GridCell<Character> pacManCell : movingPacMan){
+
+            if (pelletCell.pos() == pacManCell.pos()){
+                System.out.println("pelletInPos");
+
+                board.removePellet(pelletCell.pos());
+            }
+    }
+}}} 

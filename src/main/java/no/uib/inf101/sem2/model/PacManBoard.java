@@ -24,7 +24,7 @@ public class PacManBoard extends Grid<Character> {
                 if (row == 0 || row == rows - 1 || col == 0 || col == cols - 1) {
                     set(new CellPosition(row, col), '#');
                 } else {
-                    set(new CellPosition(row, col), ' ');
+                    set(new CellPosition(row, col), 'o');
                 }
             }
         }
@@ -70,14 +70,24 @@ public class PacManBoard extends Grid<Character> {
                 }
         }        
     } 
-    }
+}
 
     public Iterable<GridCell<Character>> getPellets() {
         List<GridCell<Character>> list = new ArrayList<>();
         for (GridCell<Character> cell : this) {
-            if (cell.value() == ' ') {
+            if (cell.value() == 'o') {
                 list.add(cell);
             }
         }
         return list;
-    }}
+    }
+
+    public void removePellet(CellPosition pos) {
+        this.set(pos, ' ');
+    }
+
+
+}
+
+    
+   

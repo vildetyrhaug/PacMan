@@ -68,7 +68,6 @@ public class PacManController implements java.awt.event.KeyListener {
 
     public void clockTick(ActionEvent e) {
         if (model.getGameState() == GameState.ACTIVE_GAME) {
-            System.out.println("calling clockTick");
             model.clockTick();
             // kall til hjelpemetoden som oppdaterer delay for timeren
             updateTimer();

@@ -4,12 +4,20 @@ import no.uib.inf101.sem2.model.GameState;
 import no.uib.inf101.sem2.model.PacDirection;
 
 public interface ControllablePacManModel {
-     /* 
+     
+
+    /* 
+     * brukes for å gi retningskommando til movePacMan
+     * tar inn en direction og kaller movePacMan med riktige parametre
+     */
+    public void move(PacDirection direction);
+    
+    /* 
      * brukes for å flytte brikken rundt på brettet 
      * Metoden skal returnere en boolean som forteller 
      * hvorvidt flyttingen faktisk ble gjennomført eller ikke.
      */
-    public boolean movePacMan(PacDirection direction);
+    public void movePacMan(int dx, int dy);
 
     /* 
      * @return en GameState som indikerer om spillet er aktivt, eller GameOver
