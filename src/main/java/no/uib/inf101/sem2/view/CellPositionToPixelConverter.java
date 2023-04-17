@@ -59,5 +59,19 @@ public class CellPositionToPixelConverter {
 
     return ellipse2d;
   }
+  public Ellipse2D getBoundsForPellet(CellPosition cellPos) {
+    // beregner størrelsen til cellen
+    double cellWidth = ((box.getWidth() - ((gd.cols()+1) * margin))/ gd.cols());
+    double cellHeight = ((box.getHeight() - ((gd.rows()+1) * margin))/ gd.rows());
+    
+    // beregner posisjonen til pelleten
+    double cellX = (box.getX() + margin + ((cellWidth + margin) * cellPos.col()));
+    double cellY = (box.getY() + margin + ((cellHeight + margin) * cellPos.row()));
+
+    // Tegner pelleten
+    Ellipse2D ellipse2d = new Ellipse2D.Double(cellX+cellWidth/3, cellY+cellHeight/3, cellWidth/3, cellHeight/3); 
+
+    return ellipse2d;
+  }
 }
 

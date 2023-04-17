@@ -2,12 +2,10 @@ package no.uib.inf101.sem2.model;
 
 import no.uib.inf101.sem2.controller.ControllablePacManModel;
 import no.uib.inf101.sem2.controller.PacManController;
-import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
 import no.uib.inf101.sem2.grid.GridDimension;
 import no.uib.inf101.sem2.pacMan.PacMan;
 import no.uib.inf101.sem2.pacMan.PacManFactory;
-import no.uib.inf101.sem2.view.PacManView;
 import no.uib.inf101.sem2.view.ViewablePacManModel;
 
 public class PacManModel implements ViewablePacManModel, ControllablePacManModel{
@@ -38,6 +36,11 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     @Override
     public Iterable<GridCell<Character>> getTilesOnBoard() {
         return this.board;
+    }
+
+    @Override
+    public Iterable<GridCell<Character>> getTilesOnPellets() {
+        return this.board.getPellets();
     }
 
     @Override
@@ -85,7 +88,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         } 
         return true;
     }
-        System.out.print("movePacMan False");
         return false;
     }
 
@@ -109,7 +111,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public Integer getTimerDelay() {
-        return 500;
+        return 300;
     }
 
     @Override
@@ -123,8 +125,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         if (movePacMan(this.getDirection())){
             this.direction = this.getDirection();
         }
-        else {
-        } 
       }
 
     @Override
@@ -135,9 +135,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         
         if (legalPlacement(this.movingPacMan.shiftedBy(direction.getDx(), direction.getDy())))
             this.direction = direction;
-        else {
-            System.out.println("Illegal move");
-        }
-
+        
     }
 }

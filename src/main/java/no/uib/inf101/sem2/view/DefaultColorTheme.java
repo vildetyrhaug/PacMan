@@ -8,6 +8,7 @@ public class DefaultColorTheme implements ColorTheme {
     private Color wallColor = Color.BLUE;
     private Color backgroundColor = Color.BLUE;
     private Color pacManColor = Color.YELLOW;
+    private Color pelletColor = Color.ORANGE;
     
     @Override
     public Color getCellColor(Character c) {
@@ -15,7 +16,7 @@ public class DefaultColorTheme implements ColorTheme {
             case '#' -> Color.BLUE;
             case 'o' -> Color.GREEN;
             case ' ' -> Color.BLACK;
-            case 'P' -> Color.YELLOW;
+            case 'P' -> Color.BLACK;
 
             default -> throw new IllegalArgumentException(
                 "No available color for '" + c + "'");
@@ -41,5 +42,9 @@ public class DefaultColorTheme implements ColorTheme {
     public Color getPacManColor() {
         return pacManColor;
     }
+
+    @Override
+    public Color getPelletColor() {
+        return pelletColor;}
     
 }

@@ -1,7 +1,11 @@
 package no.uib.inf101.sem2.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.Grid;
+import no.uib.inf101.sem2.grid.GridCell;
 
 public class PacManBoard extends Grid<Character> {
 
@@ -9,8 +13,7 @@ public class PacManBoard extends Grid<Character> {
     // the board is a grid of characters
     // '#' is a wall
     // ' ' is an empty space
-    // 'o' is a dot
-    // 'P' is a player
+    // 'P' is pac man
 
     public PacManBoard(int rows, int cols) {
         super(rows, cols);
@@ -62,6 +65,19 @@ public class PacManBoard extends Grid<Character> {
                  || col == 15 || col == 16 || col == 18)) {
                     set(new CellPosition(row, col), '#');
                 }
-        }
+                if (row == 7 && col == 10) {
+                    set(new CellPosition(row, col), 'P');
+                }
+        }        
+    } 
     }
+
+    public Iterable<GridCell<Character>> getPellets() {
+        List<GridCell<Character>> list = new ArrayList<>();
+        for (GridCell<Character> cell : this) {
+            if (cell.value() == ' ') {
+                list.add(cell);
+            }
+        }
+        return list;
     }}

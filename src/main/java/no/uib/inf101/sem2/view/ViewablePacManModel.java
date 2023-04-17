@@ -18,14 +18,19 @@ public interface ViewablePacManModel {
     Iterable<GridCell<Character>> getTilesOnBoard();
             
     
-        /* itererer over alle flisene på brikken som faller. 
+        /* itererer over alle flisene på pacman 
             Mer presist, en metode som returnerer et objekt som, 
             når det itereres over, 
-            gir alle posisjonene på brikken som faller med tilhørende symbol.
-         */
+            gir alle posisjonene på pacman
+            */
     Iterable<GridCell<Character>> getTileOnMovingPacMan();
     
-    
+        /* Itererer over alle flisene på brettet 
+         * Mer presist, en metode som returnerer et objekt som, 
+            når det itereres over, 
+            gir alle posisjonene på brettet som er tomme.
+         */
+    Iterable<GridCell<Character>> getTilesOnPellets();
         /* 
          * @return tilstanden til spillet
          */

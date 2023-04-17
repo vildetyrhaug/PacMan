@@ -56,8 +56,11 @@ public class PacManView extends JPanel {
     canvas.fill(rectangle);
     
     // Tegner cellene
-    CellPositionToPixelConverter position = new CellPositionToPixelConverter(rectangle, pacManModel.getDimension(), 2);
+    CellPositionToPixelConverter position = new CellPositionToPixelConverter(rectangle, pacManModel.getDimension(), 1);
     drawCells(canvas, pacManModel.getTilesOnBoard(), position, color);
+
+    // Tegner pellets
+    drawPellets(canvas, pacManModel.getTilesOnPellets(), position, color);
 
     // Tegner movingPacMan piece 
     drawPacMan(canvas, pacManModel.getTileOnMovingPacMan(), position, color);
@@ -100,6 +103,17 @@ public class PacManView extends JPanel {
             canvas.fill(pacMan);
             }
         } 
+      
+    private static void drawPellets(Graphics2D canvas,Iterable<GridCell<Character>> gridCellCharacter, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
+      // itererer over cellene og tegner dem
+      for(GridCell<Character> cell : gridCellCharacter){
+        Ellipse2D pellet = cellPosToPixConvert.getBoundsForPellet(cell.pos());
+        Color cellColor = colorTheme.getPelletColor();
+        
+        canvas.setColor(cellColor);
+        canvas.fill(pellet);
+        }
+    } 
         
   
   }

@@ -31,8 +31,20 @@ public interface ColorTheme {
         */
     Color getBackgroundColor(); 
 
+        /* 
+         * @return fargen til pacman
+         * farge skal være gul
+         */
     Color getPacManColor();
     
+
+        /* 
+        * @return fargen til pellets
+        */
+    Color getPelletColor();
+
+
+
         /* 
         * @return fargen til den gjennomsiktige overlayen når spillet er game over
         * farge bør være new Color(0, 0, 0, 128)
