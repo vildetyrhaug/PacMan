@@ -38,6 +38,10 @@ public class PacMan implements Iterable<GridCell<Character>> {
         
     }
 
+    public CellPosition getPos() {
+        return pos;
+    }
+
 
 
 }

@@ -2,6 +2,7 @@ package no.uib.inf101.sem2.model;
 
 import no.uib.inf101.sem2.controller.ControllablePacManModel;
 import no.uib.inf101.sem2.controller.PacManController;
+import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
 import no.uib.inf101.sem2.grid.GridDimension;
 import no.uib.inf101.sem2.pacMan.PacMan;
@@ -66,8 +67,25 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             if (this.legalPlacement(newPiece)) {
                 this.movingPacMan = newPiece;
                 this.direction = this.getDirection();
+                // check what is in the position of the pacman
+                interactWith(this.movingPacMan.getPos());
 
         }}          
+
+    public void interactWith(CellPosition pos) {
+        // checks what is in the position of the pacman
+        // if it is a pellet, it is removed from the board
+        // if it is a ghost, the game is over
+        if (board.get(pos) == 'o') {
+            board.removePellet(pos);
+            // update score
+            
+        }
+        if (board.get(pos) == 'G') {
+            gameState = GameState.GAME_OVER;
+        }
+    }
+
 
     public PacDirection getDirection() {
         return direction.currentDirection();
@@ -99,12 +117,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public void clockTick() {
-        // interact with pacDirection to move the piece
-        /* if (movePacMan(this.getDirection())){
-            this.direction = this.getDirection();
-        } */
         move(direction);
-        // check if the piece is on a pellet
         pelletInPos();
     }
 
