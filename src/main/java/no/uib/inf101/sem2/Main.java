@@ -3,6 +3,8 @@ package no.uib.inf101.sem2;
 import javax.swing.JFrame;
 
 import no.uib.inf101.sem2.controller.PacManController;
+import no.uib.inf101.sem2.ghost.GhostFactory;
+import no.uib.inf101.sem2.ghost.RandomGhostFactory;
 import no.uib.inf101.sem2.model.PacManBoard;
 import no.uib.inf101.sem2.model.PacManModel;
 import no.uib.inf101.sem2.pacMan.PacManFactory;
@@ -14,9 +16,10 @@ public class Main {
    
     PacManBoard board = new PacManBoard(11, 21);
 
-    PacManFactory factory = new RandomPacManFactory();
+    PacManFactory pacManFactory = new RandomPacManFactory();
+    GhostFactory ghostFactory = new RandomGhostFactory();
 
-    PacManModel model = new PacManModel(board, factory);
+    PacManModel model = new PacManModel(board, pacManFactory, ghostFactory);
     PacManView view = new PacManView(model);
 
     PacManController controller = new PacManController(model, view);

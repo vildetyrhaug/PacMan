@@ -1,6 +1,7 @@
 package no.uib.inf101.sem2.controller;
 
 import no.uib.inf101.sem2.model.GameState;
+import no.uib.inf101.sem2.model.GhostDirection;
 import no.uib.inf101.sem2.model.PacDirection;
 
 public interface ControllablePacManModel {
@@ -10,14 +11,17 @@ public interface ControllablePacManModel {
      * brukes for å gi retningskommando til movePacMan
      * tar inn en direction og kaller movePacMan med riktige parametre
      */
-    public void move(PacDirection direction);
+    public void move(PacDirection pacdirection, GhostDirection ghostDirection);
     
     /* 
-     * brukes for å flytte brikken rundt på brettet 
-     * Metoden skal returnere en boolean som forteller 
-     * hvorvidt flyttingen faktisk ble gjennomført eller ikke.
+     * brukes for å flytte pacman rundt på brettet 
      */
     public void movePacMan(int dx, int dy);
+
+    /* 
+     * flytter brikken rundt på brettet
+     */
+    public void moveGhost(int dx, int dy);
 
     /* 
      * @return en GameState som indikerer om spillet er aktivt, eller GameOver
@@ -40,6 +44,8 @@ public interface ControllablePacManModel {
      * setter retningen til PacMan
      */
     void setDirection(PacDirection left);
+
+
 
 
     

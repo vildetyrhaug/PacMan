@@ -39,25 +39,21 @@ public class PacManController implements java.awt.event.KeyListener {
                     // Left arrow was pressed
                     // move the pacMan left
                     model.setDirection(PacDirection.LEFT);
-                    pacManView.repaint();
             }
                 else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     // Right arrow was pressed
                     // move the pacMan right
                     model.setDirection(PacDirection.RIGHT);
-                    pacManView.repaint();
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     // Down arrow was pressed
                     // move the pacMan down
                     model.setDirection(PacDirection.DOWN);
-                    pacManView.repaint();
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_UP) {
                     // Up arrow was pressed
                     // move the pacMan up
                     model.setDirection(PacDirection.UP);
-                    pacManView.repaint();
                 }}}
 
     public void updateTimer() {
@@ -84,6 +80,10 @@ public class PacManController implements java.awt.event.KeyListener {
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
     }
+
+    /* public void updateScore() {
+        pacManView.updateScore();
+    } */
 
 
 

@@ -7,7 +7,7 @@ import no.uib.inf101.sem2.grid.CellPosition;
  * (plus the direction of no movement) in a grid
  * which one can move by changing either x or y coordinate by at most 1
  */
-public enum PacDirection {
+public enum GhostDirection {
 	RIGHT(0, 1),
 	UP(-1, 0),
 	LEFT(0, -1),
@@ -17,7 +17,7 @@ public enum PacDirection {
 	private final int dx;
 	private final int dy;
 
-	PacDirection(int dx, int dy) {
+	GhostDirection(int dx, int dy) {
 		this.dx = dx;
 		this.dy = dy;
 	}
@@ -30,7 +30,7 @@ public enum PacDirection {
 	}
 	
 	//get the current direction
-	public PacDirection currentDirection() {
+	public GhostDirection currentDirection() {
 		return this;
 	}
 

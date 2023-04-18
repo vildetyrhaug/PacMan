@@ -65,8 +65,9 @@ public class PacManBoard extends Grid<Character> {
                  || col == 15 || col == 16 || col == 18)) {
                     set(new CellPosition(row, col), '#');
                 }
-                if (row == 7 && col == 10) {
-                    set(new CellPosition(row, col), 'P');
+                // set startpos til pacman og startpos til ghost tom
+                if ((row == 7 && col == 10) || (row == 5 && col > 7 && col < 13) ) {
+                    set(new CellPosition(row, col), ' ');
                 }
         }        
     } 

@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 
+import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
 
 
@@ -57,11 +58,13 @@ public class PacManView extends JPanel {
     
     // Tegner cellene og pellets
     CellPositionToPixelConverter position = new CellPositionToPixelConverter(rectangle, pacManModel.getDimension(), 1);
-    drawCells(canvas, pacManModel.getTilesOnBoard(), position, color);
+    drawCellsAndPellets(canvas, pacManModel.getTilesOnBoard(), position, color);
 
     // Tegner movingPacMan piece 
     drawPacMan(canvas, pacManModel.getTileOnMovingPacMan(), position, color);
 
+    // Tegner movingGhost piece
+    drawGhost(canvas, pacManModel.getTileOnMovingGhost(), position, color);
 
     /* if (model.getGameState()== GameState.GAME_OVER) {
       // Lager en grå firkant over hele brettet
@@ -78,40 +81,58 @@ public class PacManView extends JPanel {
 
   }
 
-
-    private static void drawCells(Graphics2D canvas, Iterable<GridCell<Character>> gridCellCharacter, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
+    private static void drawCellsAndPellets(Graphics2D canvas, Iterable<GridCell<Character>> gridCellCharacter, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
       // itererer over cellene og tegner dem
       for(GridCell<Character> cell : gridCellCharacter){
         // draw the cells 
-          if (cell.value() == ' ' || cell.value() == 'P' || cell.value() == '#'){
-
-              Rectangle2D rectangle = cellPosToPixConvert.getBoundsForCell(cell.pos());
-              Color cellColor = colorTheme.getCellColor(cell.value());
-              
-              canvas.setColor(cellColor);
-              canvas.fill(rectangle);
-          }
-        // draw the pellets
+          if (cell.value() == ' ' || cell.value() == '#' || cell.value() == 'P'){
+              drawCells(canvas, cell, cellPosToPixConvert, colorTheme);
+            }
           if (cell.value() == 'o'){
-              Ellipse2D pellet = cellPosToPixConvert.getBoundsForPellet(cell.pos());
-              Color cellColor = colorTheme.getPelletColor();
-              
-              canvas.setColor(cellColor);
-              canvas.fill(pellet);
-              }
+              drawPellets(canvas, cell, cellPosToPixConvert, colorTheme);
+            }   
+      }}
 
-          }
-      }
-      
-      private static void drawPacMan(Graphics2D canvas, Iterable<GridCell<Character>> gridCellCharacter, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
+    private static void drawCells(Graphics2D canvas, GridCell<Character> cell, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
         // itererer over cellene og tegner dem
-        for(GridCell<Character> cell : gridCellCharacter){
-            Ellipse2D pacMan = cellPosToPixConvert.getBoundsForPacMan(cell.pos());
-            Color cellColor = colorTheme.getPacManColor();
+            Rectangle2D rectangle = cellPosToPixConvert.getBoundsForCell(cell.pos());
+            Color cellColor = colorTheme.getCellColor(cell.value());
+              
+            canvas.setColor(cellColor);
+            canvas.fill(rectangle);
+        }
+    
+    private static void drawPellets(Graphics2D canvas, GridCell<Character> cell, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
+            Ellipse2D pellet = cellPosToPixConvert.getBoundsForPellet(cell.pos());
+            Color cellColor = colorTheme.getPelletColor();
             
             canvas.setColor(cellColor);
-            canvas.fill(pacMan);
-            }
-        } 
+            canvas.fill(pellet);
 
-  }
+        }
+
+    private static void drawPacMan(Graphics2D canvas, CellPosition posOfPacMan, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
+        // itererer over cellene og tegner dem
+        Ellipse2D pacMan = cellPosToPixConvert.getBoundsForPacManOrGhost(posOfPacMan);
+        Color cellColor = colorTheme.getPacManColor();
+          
+        canvas.setColor(cellColor);
+        canvas.fill(pacMan);
+            }
+    
+    private static void drawGhost(Graphics2D canvas, CellPosition posOfGhost, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
+      Ellipse2D ghost = cellPosToPixConvert.getBoundsForPacManOrGhost(posOfGhost);
+      Color cellColor = colorTheme.getGhostColor();
+      
+      canvas.setColor(cellColor);
+      canvas.fill(ghost);
+      }
+    }
+
+
+
+    /* public void updateScore() {
+
+
+      }  */
+

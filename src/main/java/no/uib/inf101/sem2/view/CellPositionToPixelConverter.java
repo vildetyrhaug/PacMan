@@ -45,7 +45,7 @@ public class CellPositionToPixelConverter {
     return rectangle2d;
   }
 
-  public Ellipse2D getBoundsForPacMan(CellPosition cellPos) {
+  public Ellipse2D getBoundsForPacManOrGhost(CellPosition cellPos) {
     // beregner størrelsen til cellen
     double cellWidth = ((box.getWidth() - ((gd.cols()+1) * margin))/ gd.cols());
     double cellHeight = ((box.getHeight() - ((gd.rows()+1) * margin))/ gd.rows());

@@ -1,5 +1,6 @@
 package no.uib.inf101.sem2.view;
 
+import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
 import no.uib.inf101.sem2.grid.GridDimension;
 
@@ -18,12 +19,13 @@ public interface ViewablePacManModel {
     Iterable<GridCell<Character>> getTilesOnBoard();
             
     
-        /* itererer over alle flisene på pacman 
-            Mer presist, en metode som returnerer et objekt som, 
-            når det itereres over, 
-            gir alle posisjonene på pacman
+        /* henter posisjonen til pacman
             */
-    Iterable<GridCell<Character>> getTileOnMovingPacMan();
+    CellPosition getTileOnMovingPacMan();
+
+    /* henter posisjonen til Ghost
+            */
+    CellPosition getTileOnMovingGhost();
     
         /* Itererer over alle flisene på brettet 
          * Mer presist, en metode som returnerer et objekt som, 
@@ -31,6 +33,8 @@ public interface ViewablePacManModel {
             gir alle posisjonene på brettet som er tomme.
          */
     Iterable<GridCell<Character>> getTilesOnPellets();
+
+
         /* 
          * @return tilstanden til spillet
          */

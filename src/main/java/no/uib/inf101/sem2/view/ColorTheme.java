@@ -43,6 +43,10 @@ public interface ColorTheme {
         */
     Color getPelletColor();
 
+        /* 
+         * @return fargen til ghosten
+         */
+    Color getGhostColor();
 
 
         /* 

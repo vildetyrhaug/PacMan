@@ -9,6 +9,7 @@ public class DefaultColorTheme implements ColorTheme {
     private Color backgroundColor = Color.BLUE;
     private Color pacManColor = Color.YELLOW;
     private Color pelletColor = Color.ORANGE;
+    private Color ghostColor = Color.RED, ghostColor2 = Color.CYAN, ghostColor3 = Color.GREEN;
     
     @Override
     public Color getCellColor(Character c) {
@@ -16,7 +17,6 @@ public class DefaultColorTheme implements ColorTheme {
             case '#' -> Color.BLUE;
             case 'o' -> Color.GREEN;
             case ' ' -> Color.BLACK;
-            case 'P' -> Color.BLACK;
 
             default -> throw new IllegalArgumentException(
                 "No available color for '" + c + "'");
@@ -47,4 +47,18 @@ public class DefaultColorTheme implements ColorTheme {
     public Color getPelletColor() {
         return pelletColor;}
     
+    @Override
+    public Color getGhostColor() {
+        // randomize ghost color
+        int random = (int) (Math.random() * 3);
+        Color color = switch(random) {
+            case 0 -> ghostColor;
+            case 1 -> ghostColor2;
+            case 2 -> ghostColor3;
+            default -> throw new IllegalArgumentException(
+                "No available color for '" + random + "'");
+          };
+          return color;
+
+    }
 }
