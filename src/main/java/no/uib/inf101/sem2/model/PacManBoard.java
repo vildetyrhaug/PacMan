@@ -14,11 +14,13 @@ public class PacManBoard extends Grid<Character> {
     // '#' is a wall
     // ' ' is an empty space
     // 'P' is pac man
+    // 'o' is a pellet
 
     public PacManBoard(int rows, int cols) {
-        super(rows, cols);
         
-        // initialise the board with walls and empty spaces
+        super(rows, cols);
+
+        // initialize the board with walls and empty spaces
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 if (row == 0 || row == rows - 1 || col == 0 || col == cols - 1) {
@@ -28,50 +30,47 @@ public class PacManBoard extends Grid<Character> {
                 }
             }
         }
-        
-        // add a maze with this structure. Adding the walls (#)
-        // [[#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#],
-        //  [#, , , , ,#, , , , , , , , , ,#, , , , ,#],
-        //  [#, ,#,#, ,#, ,#,#,#,#,#,#,#, ,#, ,#,#, ,#],
-        //  [#, ,#, , , , , , , , , , , , , , , ,#, ,#],
-        //  [#, ,#, ,#,#, ,#,#,#, ,#,#,#, ,#,#, ,#, ,#],
-        //  [#, , , , , , ,#, , , , , ,#, , , , , , ,#],
-        //  [#, ,#, ,#,#, ,#,#,#,#,#,#,#, ,#,#, ,#, ,#],
-        //  [#, ,#, , , , , , , , , , , , , , , ,#, ,#],
-        //  [#, ,#,#, ,#, ,#,#,#,#,#,#,#, ,#, ,#,#, ,#],
-        //  [#, , , , ,#, , , , , , , , , ,#, , , , ,#],
-        //  [#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#],
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                
-                if ((row == 1 || row == 9) && (col == 5 || col == 15)){
+
+        // add the maze with walls, ghosts, and Pac-Man
+        String[] maze = {
+            "###################",
+            "#     #     #     #",
+            "# ### # ### # ### #",
+            "#  #           #  #",
+            "## ### ## ## ### ##",
+            "#       # #       #",
+            "# # ## ##### ## # #",
+            "# # #         # # #",
+            "# # ## ## ## ## # #",
+            "       #GGG#       ",
+            "# # ## ##### ## # #",
+            "# #  #       #  # #",
+            "# # ## ##### ## # #",
+            "#       # #       #",
+            "## ### ## ## ### ##",
+            "#  #           #  #",
+            "# ### # ### # ### #",
+            "#     #     #     #",
+            "###################"
+        };
+
+        for (int row = 0; row < maze.length; row++) {
+            String mazeRow = maze[row];
+            for (int col = 0; col < mazeRow.length(); col++) {
+                char mazeChar = mazeRow.charAt(col);
+                if (mazeChar == '#') {
                     set(new CellPosition(row, col), '#');
+                } else if (mazeChar == ' ') {
+                    set(new CellPosition(row, col), 'o');
+                } else if (mazeChar == 'G') {
+                    set(new CellPosition(row, col), 'G');
+                } else if (mazeChar == 'P') {
+                    set(new CellPosition(row, col), 'P');
                 }
-                if ((row == 2 || row == 8) && (col == 2 || col == 3 || col == 5 || col > 6 && col < 14 
-                 || col == 15 || col == 17 || col == 18)) {
-                    set(new CellPosition(row, col), '#');
-                }
-                if ((row == 3 || row == 7) && (col == 2 || col == 18)){
-                    set(new CellPosition(row, col), '#');
-                }
-                if (row == 4 && (col == 2 || col == 4 || col == 5 || col > 6 && col < 10 
-                 || col > 10 && col < 14 || col == 15 || col == 16 || col == 18)) {
-                    set(new CellPosition(row, col), '#');
-                }
-                if (row == 5 && (col == 7 || col == 13)) {
-                    set(new CellPosition(row, col), '#');
-                }
-                if (row == 6 && (col == 2 || col == 4 || col == 5 || col > 6 && col < 14 
-                 || col == 15 || col == 16 || col == 18)) {
-                    set(new CellPosition(row, col), '#');
-                }
-                // set startpos til pacman og startpos til ghost tom
-                if ((row == 7 && col == 10) || (row == 5 && col > 7 && col < 13) ) {
-                    set(new CellPosition(row, col), ' ');
-                }
-        }        
-    } 
-}
+            }
+        }
+        }
+
 
     public Iterable<GridCell<Character>> getPellets() {
         List<GridCell<Character>> list = new ArrayList<>();
@@ -87,8 +86,8 @@ public class PacManBoard extends Grid<Character> {
         this.set(pos, ' ');
     }
 
-
 }
+
 
     
    

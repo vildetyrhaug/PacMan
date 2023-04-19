@@ -5,7 +5,7 @@ public class RandomPacManFactory implements PacManFactory {
     @Override
     public PacMan getNext() {
         // Lager nytt pac-man objekt
-        PacMan nextPacMan = PacMan.newPacMan();
+        PacMan nextPacMan = PacMan.newPacMan(19,19);
         return nextPacMan;
     }
     

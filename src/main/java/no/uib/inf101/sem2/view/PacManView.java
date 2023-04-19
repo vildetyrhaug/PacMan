@@ -26,7 +26,7 @@ public class PacManView extends JPanel {
     // KONSTRUKTØR
     public PacManView(ViewablePacManModel pacManModel) {
       this.setFocusable(true);
-      this.setPreferredSize(new Dimension(700, 300));
+      this.setPreferredSize(new Dimension(600, 600));
 
       this.pacManModel = pacManModel;
       this.color = new DefaultColorTheme();

@@ -14,7 +14,7 @@ import no.uib.inf101.sem2.view.PacManView;
 public class Main {
   public static void main(String[] args) {
    
-    PacManBoard board = new PacManBoard(11, 21);
+    PacManBoard board = new PacManBoard(19, 19);
 
     PacManFactory pacManFactory = new RandomPacManFactory();
     GhostFactory ghostFactory = new RandomGhostFactory();
