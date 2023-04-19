@@ -53,12 +53,18 @@ public interface ColorTheme {
         * @return fargen til den gjennomsiktige overlayen når spillet er game over
         * farge bør være new Color(0, 0, 0, 128)
         */
-    //Color getSeethroughColor();
+    Color getGameOverBackgroundColor();
 
         /* 
         * @return fargen på Game over teksten 
         * farge skal ikke være null eller gjennomsiktig.
         */
-    //Color getGameOverColor();
+    Color getGameOverColor();
+
+
+    Color getPauseColor();
+
+
+    Color getPauseBackgroundColor();
  
 }

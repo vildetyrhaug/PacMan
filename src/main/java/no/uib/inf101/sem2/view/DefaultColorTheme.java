@@ -10,7 +10,13 @@ public class DefaultColorTheme implements ColorTheme {
     private Color pacManColor = Color.YELLOW;
     private Color pelletColor = Color.ORANGE;
     private Color ghostColor = Color.RED, ghostColor2 = Color.CYAN, ghostColor3 = Color.GREEN;
-    
+
+    private Color gameOverBackgroundColor = Color.LIGHT_GRAY;
+    private Color gameOverColor = Color.RED;
+
+    private Color pauseColor = Color.RED;
+    private Color pauseBackgroundColor = Color.LIGHT_GRAY;
+
     @Override
     public Color getCellColor(Character c) {
         Color color = switch(c) {
@@ -60,5 +66,25 @@ public class DefaultColorTheme implements ColorTheme {
           };
           return color;
 
+    }
+
+    @Override
+    public Color getGameOverBackgroundColor() {
+        return gameOverBackgroundColor;    
+    }
+
+    @Override
+    public Color getGameOverColor() {
+        return gameOverColor;    
+    }
+
+    @Override
+    public Color getPauseColor() {
+        return pauseColor;
+    }
+
+    @Override
+    public Color getPauseBackgroundColor() {
+        return pauseBackgroundColor;
     }
 }

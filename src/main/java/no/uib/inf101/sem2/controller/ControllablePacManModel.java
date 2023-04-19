@@ -45,8 +45,10 @@ public interface ControllablePacManModel {
      */
     void setDirection(PacDirection left);
 
-
-
+    /* 
+     * endrer gameState baser på input
+     */
+    public void setGameState(GameState gameState);
 
     
 }

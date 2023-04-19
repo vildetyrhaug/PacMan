@@ -3,6 +3,7 @@ package no.uib.inf101.sem2.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
+import no.uib.inf101.sem2.model.GameState;
 
 
 
@@ -66,19 +68,38 @@ public class PacManView extends JPanel {
     // Tegner movingGhost piece
     drawGhost(canvas, pacManModel.getTileOnMovingGhost(), position, color);
 
-    /* if (model.getGameState()== GameState.GAME_OVER) {
+    // Pauseskjerm
+    if (pacManModel.getGameState() == GameState.PAUSE_GAME){
+      //canvas.setColor(Color.LIGHT_GRAY.darker().darker());
+      //canvas.fill(new Rectangle2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight));
+      
+      canvas.setColor(color.getPauseBackgroundColor());  
+      canvas.fill(new Rectangle2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight));
+      canvas.setColor(color.getPauseColor()); 
+      canvas.setFont(new Font("Monospaced", Font.BOLD, 30));
+      Inf101Graphics.drawCenteredString(canvas, "Spillet er satt på pause", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight-200);
+      canvas.setFont(new Font("Monospaced", Font.BOLD, 20));
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'p' for å fortsette spillet", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å avslutte spillet", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight+100);
+
+
+    }
+    if (pacManModel.getGameState() == GameState.GAME_OVER) {
       // Lager en grå firkant over hele brettet
       canvas.setColor(Color.LIGHT_GRAY.darker().darker());
       canvas.fill(new Rectangle2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight));
       // Tegner en rute med gjennomsiktig farge som dekker hele skjermen,
       // og tegner teksten "GAME OVER" oppå
-      canvas.setColor(colorTheme.getSeethroughColor());  
+      canvas.setColor(color.getGameOverBackgroundColor());  
       canvas.fill(new Rectangle2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight));
-      canvas.setColor(colorTheme.getGameOverColor()); 
+      canvas.setColor(color.getGameOverColor()); 
       canvas.setFont(new Font("Monospaced", Font.BOLD, 50));
-      Inf101Graphics.drawCenteredString(canvas, "GAME OVER", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight);
-    }  */
-
+      Inf101Graphics.drawCenteredString(canvas, "GAME OVER", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight-200);
+      canvas.setFont(new Font("Monospaced", Font.BOLD, 20));
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'space' for å starte på nytt", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å avslutte", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight + 100);
+    
+    } 
   }
 
     private static void drawCellsAndPellets(Graphics2D canvas, Iterable<GridCell<Character>> gridCellCharacter, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){

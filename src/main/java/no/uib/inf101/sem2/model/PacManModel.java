@@ -69,6 +69,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public void move(PacDirection pacDirection, GhostDirection ghostDirection) {
+        interactWith(this.movingPacMan.getPos());
         switch(pacDirection){
             case LEFT -> movePacMan(0,-1);
             case RIGHT -> movePacMan(0,1);
@@ -78,8 +79,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         // randomize the direction of the Ghost by calling setDirectionGhost
         // and then move the ghost
         this.randomizeGhostDirection();
-        
     }
+
     private void randomizeGhostDirection(){
         int random = (int) (Math.random() * 4);
         switch(random){
@@ -101,15 +102,14 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     public void movePacMan(int dx, int dy) {
         // moves the piece around on the board
         // returns a boolean indicating whether the move was successful or not.
- 
+
             PacMan newPiece = this.movingPacMan.shiftedBy(dx, dy);
             if (this.legalPlacementPac(newPiece)) {
                 this.movingPacMan = newPiece;
                 this.pacDirection = this.getPacDirection();
                 // check what is in the position of the pacman
-                interactWith(this.movingPacMan.getPos());
-
-        }}       
+        }                
+}       
         
     
     @Override
@@ -127,18 +127,31 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         // checks what is in the position of the pacman
         // if it is a pellet, it is removed from the board
         // if it is a ghost, the game is over
+        System.out.println("Pacman: " + movingPacMan.getPos());
+        System.out.println("Ghost: " + movingGhost.getPos());
+        
+        if (pacAndGhostCollide()) {
+            setGameState(GameState.GAME_OVER);            
+                }
+    
         if (board.get(pos) == 'o') {
             board.removePellet(pos);
             // update score
             //controller.updateScore();
         }
-        if (movingPacMan.getPos().equals(movingGhost.getPos())) {
-            System.out.println("GAME OVER");
-            gameState = GameState.GAME_OVER;
-        }
     }
 
-    
+    private boolean pacAndGhostCollide() {
+        // if the pacman and the ghost are in the same position, the game is over
+        if (movingPacMan.getPos().equals(movingGhost.getPos())) {
+            return true;
+        }
+        if (movingGhost.getPos().equals(movingPacMan.getPos())){
+            return true;
+        }
+        return false;
+    }
+
 
     private PacDirection getPacDirection() {
         return pacDirection.currentDirection();
@@ -153,7 +166,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         if (!board.positionIsOnGrid(newPac.getPos())) {
                 return false;
             }
-        if (board.get(newPac.getPos()) != ' ' && board.get(newPac.getPos()) != 'P' && board.get(newPac.getPos()) != 'o') {
+        if (board.get(newPac.getPos()) != ' ' && board.get(newPac.getPos()) != 'o') {
                 return false;
             }
         
@@ -166,7 +179,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         if (!board.positionIsOnGrid(newGhost.getPos())) {
                 return false;
             }
-        else if (board.get(newGhost.getPos()) != ' ' && board.get(newGhost.getPos()) != 'P' && board.get(newGhost.getPos()) != 'o' ) {
+        else if (board.get(newGhost.getPos()) != ' ' && board.get(newGhost.getPos()) != 'o' ) {
                 return false;
             }
 
@@ -186,6 +199,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public void clockTick() {
+
         move(pacDirection, ghostDirection);
     }
 
@@ -269,4 +283,15 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             }
         }
         return false;  
-    }}
+    }
+
+
+    @Override
+    public void setGameState(GameState gameState) {
+        System.out.println("Game state changed to " + gameState);
+        this.gameState = gameState;
+    }
+
+
+
+}

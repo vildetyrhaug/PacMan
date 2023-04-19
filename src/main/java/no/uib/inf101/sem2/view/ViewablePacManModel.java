@@ -3,6 +3,7 @@ package no.uib.inf101.sem2.view;
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
 import no.uib.inf101.sem2.grid.GridDimension;
+import no.uib.inf101.sem2.model.GameState;
 
 public interface ViewablePacManModel {
         
@@ -38,5 +39,5 @@ public interface ViewablePacManModel {
         /* 
          * @return tilstanden til spillet
          */
-    //GameState getGameState();
+    GameState getGameState();
 }
