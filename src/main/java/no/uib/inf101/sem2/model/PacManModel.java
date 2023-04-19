@@ -142,11 +142,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
 
     private boolean pacAndGhostCollide() {
-        // if the pacman and the ghost are in the same position, the game is over
+        // if the pacman and the ghost move past eachother, the game is over
         if (movingPacMan.getPos().equals(movingGhost.getPos())) {
-            return true;
-        }
-        if (movingGhost.getPos().equals(movingPacMan.getPos())){
             return true;
         }
         return false;
