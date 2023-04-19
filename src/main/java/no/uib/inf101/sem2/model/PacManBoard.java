@@ -15,6 +15,8 @@ public class PacManBoard extends Grid<Character> {
     // ' ' is an empty space
     // 'P' is pac man
     // 'o' is a pellet
+    // 'H' is the Ghost-area entry
+    // 'G' is the ghosts area
 
     public PacManBoard(int rows, int cols) {
         

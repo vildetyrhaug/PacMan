@@ -166,7 +166,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         if (!board.positionIsOnGrid(newGhost.getPos())) {
                 return false;
             }
-        else if (board.get(newGhost.getPos()) != ' ' && board.get(newGhost.getPos()) != 'P' && board.get(newGhost.getPos()) != 'o') {
+        else if (board.get(newGhost.getPos()) != ' ' && board.get(newGhost.getPos()) != 'P' && board.get(newGhost.getPos()) != 'o' ) {
                 return false;
             }
 
@@ -201,7 +201,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     } }
 
     private void setDirectionGhost(GhostDirection direction) {
-        if ((legalPlacementGhost(this.movingGhost.shiftedBy(direction.getDx(), direction.getDy()))) && !newGhostDirectionIsOppositeDirection(direction)){
+        if ((legalPlacementGhost(this.movingGhost.shiftedBy(direction.getDx(), direction.getDy()))) && (!newGhostDirectionIsOppositeDirection(direction) || ghostLockedInCorner())){
             this.ghostDirection = direction;
         
     }}
@@ -230,5 +230,43 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
                 }
             }
         }
+        
         return false;
-}}
+}
+
+
+    private boolean ghostLockedInCorner() {
+        // if all the surrounding directions except for backwards are walls, return true
+        // if not, return false
+        switch(ghostDirection){
+            case LEFT -> {
+                if (!legalPlacementGhost(movingGhost.shiftedBy(0,-1)) 
+                && !legalPlacementGhost(movingGhost.shiftedBy(1,0)) 
+                && !legalPlacementGhost(movingGhost.shiftedBy(-1,0))){
+                    return true;
+                }
+            }
+            case RIGHT -> {
+                if (!legalPlacementGhost(movingGhost.shiftedBy(0,1)) 
+                && !legalPlacementGhost(movingGhost.shiftedBy(1,0)) 
+                && !legalPlacementGhost(movingGhost.shiftedBy(-1,0))){
+                    return true;
+                }
+            }
+            case UP -> {
+                if (!legalPlacementGhost(movingGhost.shiftedBy(0,-1)) 
+                && !legalPlacementGhost(movingGhost.shiftedBy(0,1)) 
+                && !legalPlacementGhost(movingGhost.shiftedBy(-1,0))){
+                    return true;
+                }
+            }
+            case DOWN -> {
+                if (!legalPlacementGhost(movingGhost.shiftedBy(0,-1)) 
+                && !legalPlacementGhost(movingGhost.shiftedBy(0,1)) 
+                && !legalPlacementGhost(movingGhost.shiftedBy(1,0))){
+                    return true;
+                }
+            }
+        }
+        return false;  
+    }}
