@@ -67,6 +67,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         return this.movingGhost.getPos();
     }
 
+    @Override
     public void move(PacDirection pacDirection, GhostDirection ghostDirection) {
         switch(pacDirection){
             case LEFT -> movePacMan(0,-1);
@@ -79,7 +80,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         this.randomizeGhostDirection();
         
     }
-    public void randomizeGhostDirection(){
+    private void randomizeGhostDirection(){
         int random = (int) (Math.random() * 4);
         switch(random){
             case 0 -> setDirectionGhost(GhostDirection.LEFT);
@@ -115,14 +116,14 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     public void moveGhost(int dx, int dy) {
         
         Ghost newGhost = this.movingGhost.shiftedBy(dx, dy);
-        if (this.legalPlacementGhost(newGhost)){
-            this.movingGhost = newGhost;
-            this.ghostDirection = this.getGhostDirection();
+        if (legalPlacementGhost(newGhost)){
+            movingGhost = newGhost;
+            ghostDirection = this.getGhostDirection();
         }
     }
-    
 
-    public void interactWith(CellPosition pos) {
+
+    private void interactWith(CellPosition pos) {
         // checks what is in the position of the pacman
         // if it is a pellet, it is removed from the board
         // if it is a ghost, the game is over
@@ -139,14 +140,14 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     
 
-    public PacDirection getPacDirection() {
+    private PacDirection getPacDirection() {
         return pacDirection.currentDirection();
     }
-    public GhostDirection getGhostDirection() {
+    private GhostDirection getGhostDirection() {
         return ghostDirection.currentDirection();
     }
     
-    public boolean legalPlacementPac(PacMan newPac) {
+    private boolean legalPlacementPac(PacMan newPac) {
         // sjekker om en pacman kan plasseres på brettet
         // returnerer true hvis det er lovlig, false ellers
         if (!board.positionIsOnGrid(newPac.getPos())) {
@@ -159,23 +160,23 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         return true;
     }
 
-    public boolean legalPlacementGhost(Ghost newGhost) {
-        // sjekker om en pacman kan plasseres på brettet
+    private boolean legalPlacementGhost(Ghost newGhost) {
+        // sjekker om en ghost kan plasseres på brettet
         // returnerer true hvis det er lovlig, false ellers
         if (!board.positionIsOnGrid(newGhost.getPos())) {
                 return false;
             }
-        if (board.get(newGhost.getPos()) != ' ' && board.get(newGhost.getPos()) != 'P' && board.get(newGhost.getPos()) != 'o') {
+        else if (board.get(newGhost.getPos()) != ' ' && board.get(newGhost.getPos()) != 'P' && board.get(newGhost.getPos()) != 'o') {
                 return false;
             }
-        
+
         return true;
     }
 
 
     @Override
     public Integer getTimerDelay() {
-        return 300;
+        return 200;
     }
 
     @Override
@@ -193,16 +194,41 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         // check if neighbor is empty 
         // if so, change direction
         // if not, don´t change direction
-        
+
         if (legalPlacementPac(this.movingPacMan.shiftedBy(direction.getDx(), direction.getDy()))){
             this.pacDirection = direction;
         
-    }}
+    } }
 
-    public void setDirectionGhost(GhostDirection direction) {
-        if (legalPlacementGhost(this.movingGhost.shiftedBy(direction.getDx(), direction.getDy()))){
+    private void setDirectionGhost(GhostDirection direction) {
+        if ((legalPlacementGhost(this.movingGhost.shiftedBy(direction.getDx(), direction.getDy()))) && !newGhostDirectionIsOppositeDirection(direction)){
             this.ghostDirection = direction;
         
-    }
-        
+    }}
+    
+    private boolean newGhostDirectionIsOppositeDirection(GhostDirection direction) {
+        // if direction is the opposite of current direction, return false
+        switch(direction){
+            case LEFT -> {
+                if (ghostDirection == GhostDirection.RIGHT){
+                    return true;
+                }
+            }
+            case RIGHT -> {
+                if (ghostDirection == GhostDirection.LEFT){
+                    return true;
+                }
+            }
+            case UP -> {
+                if (ghostDirection == GhostDirection.DOWN){
+                    return true;
+                }
+            }
+            case DOWN -> {
+                if (ghostDirection == GhostDirection.UP){
+                    return true;
+                }
+            }
+        }
+        return false;
 }}
