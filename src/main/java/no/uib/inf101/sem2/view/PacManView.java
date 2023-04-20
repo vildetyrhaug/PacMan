@@ -68,10 +68,25 @@ public class PacManView extends JPanel {
     // Tegner movingGhost piece
     drawGhost(canvas, pacManModel.getTileOnMovingGhost(), position, color);
 
+    // Startskjerm 
+    if (pacManModel.getGameState() == GameState.START_GAME){
+      canvas.setColor(color.getStartBackgroundColor());  
+      canvas.fill(new Rectangle2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight));
+      canvas.setColor(color.getStartColor()); 
+      canvas.setFont(new Font("Monospaced", Font.BOLD, 50));
+      Inf101Graphics.drawCenteredString(canvas, "PAC-MAN", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight-400);
+      canvas.setFont(new Font("Monospaced", Font.BOLD, 15));
+      Inf101Graphics.drawCenteredString(canvas, "Målet er å samle opp alle gule pellets på brettet", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight-200);
+      Inf101Graphics.drawCenteredString(canvas, "Pass deg for spøkelsene. Hvis de kommer borti deg", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight-100);
+      Inf101Graphics.drawCenteredString(canvas, "så mister du ett liv. Du har tre liv.", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight);
+      Inf101Graphics.drawCenteredString(canvas, "Plukk opp frukten for å få ekstra poeng.", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight+100);
+      Inf101Graphics.drawCenteredString(canvas, "Benytt piltastene for å bevege pac-man", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight+200);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'mellomrom' for å starte spillet", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight+300);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'p' for å pause spillet", OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight+400);
+    }
+
     // Pauseskjerm
     if (pacManModel.getGameState() == GameState.PAUSE_GAME){
-      //canvas.setColor(Color.LIGHT_GRAY.darker().darker());
-      //canvas.fill(new Rectangle2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight));
       
       canvas.setColor(color.getPauseBackgroundColor());  
       canvas.fill(new Rectangle2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight));
@@ -85,9 +100,6 @@ public class PacManView extends JPanel {
 
     }
     if (pacManModel.getGameState() == GameState.GAME_OVER) {
-      // Lager en grå firkant over hele brettet
-      canvas.setColor(Color.LIGHT_GRAY.darker().darker());
-      canvas.fill(new Rectangle2D.Double(OUTERMARGIN, OUTERMARGIN, cellWidth, cellHeight));
       // Tegner en rute med gjennomsiktig farge som dekker hele skjermen,
       // og tegner teksten "GAME OVER" oppå
       canvas.setColor(color.getGameOverBackgroundColor());  

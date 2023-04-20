@@ -43,5 +43,5 @@ public enum GhostDirection {
 	public CellPosition getNeighbor(CellPosition pos) {
 		return new CellPosition(pos.row() + dy, pos.col() + dx);
 	}
-
+    
 }

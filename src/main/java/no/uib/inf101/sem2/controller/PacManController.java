@@ -35,49 +35,53 @@ public class PacManController implements java.awt.event.KeyListener {
     @Override
         public void keyPressed(KeyEvent e) {
             if (model.getGameState() != GameState.GAME_OVER){
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    // Left arrow was pressed
-                    // move the pacMan left
-                    model.setDirection(PacDirection.LEFT);
+                if(model.getGameState()!= GameState.START_GAME){
+                    switch(e.getKeyCode()){
+                        case KeyEvent.VK_LEFT -> {
+                            // Left arrow was pressed
+                            // move the pacMan left
+                            model.setDirection(PacDirection.LEFT);
+                            pacManView.repaint();
+                        }
+                        case KeyEvent.VK_RIGHT -> {
+                            // Right arrow was pressed
+                            // move the pacMan right
+                            model.setDirection(PacDirection.RIGHT);
+                            pacManView.repaint();
+                        }
+                        case KeyEvent.VK_DOWN -> {
+                            // Down arrow was pressed
+                            // move the pacMan down
+                            model.setDirection(PacDirection.DOWN);
+                            pacManView.repaint();
+                        }
+                        case KeyEvent.VK_UP -> {
+                            // Up arrow was pressed
+                            // move the pacMan up
+                            model.setDirection(PacDirection.UP);
+                            pacManView.repaint();
+                        }
+                        case KeyEvent.VK_P -> {
+                            // p was pressed 
+                            // pause the game
+                            switch(model.getGameState()){
+                                case ACTIVE_GAME -> model.setGameState(GameState.PAUSE_GAME);
+                                case PAUSE_GAME -> model.setGameState(GameState.ACTIVE_GAME);
+                            }   pacManView.repaint();
+                        }
+                    }}
+                // GameState is START_GAME
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    // Space was pressed
+                    // start the game
+                    model.setGameState(GameState.ACTIVE_GAME);
                     pacManView.repaint();
-
-            }
-                else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    // Right arrow was pressed
-                    // move the pacMan right
-                    model.setDirection(PacDirection.RIGHT);
-                    pacManView.repaint();
-
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    // Down arrow was pressed
-                    // move the pacMan down
-                    model.setDirection(PacDirection.DOWN);
-                    pacManView.repaint();
-
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    // Up arrow was pressed
-                    // move the pacMan up
-                    model.setDirection(PacDirection.UP);
-                    pacManView.repaint();
-
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_P){
-                    // p was pressed 
-                    // pause the game
-                    switch(model.getGameState()){
-                        case ACTIVE_GAME -> model.setGameState(GameState.PAUSE_GAME);
-                        case PAUSE_GAME -> model.setGameState(GameState.ACTIVE_GAME);
-
-                }   
-                pacManView.repaint();
-
-            }
-            // if key is space, start new game
+                    }
+            // GameState is GAME_OVER
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 // Space was pressed
                 // start new game
+
                 updateTimer();
             }}}
 

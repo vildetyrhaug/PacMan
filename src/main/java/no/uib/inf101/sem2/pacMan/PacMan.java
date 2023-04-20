@@ -6,7 +6,6 @@ import java.util.List;
 
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
-import no.uib.inf101.sem2.model.PacManBoard;
 
 public class PacMan implements Iterable<GridCell<Character>> {
     // Representerer en pacman

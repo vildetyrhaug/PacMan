@@ -66,5 +66,11 @@ public interface ColorTheme {
 
 
     Color getPauseBackgroundColor();
+
+
+    Color getStartBackgroundColor();
+
+
+    Color getStartColor();
  
 }
