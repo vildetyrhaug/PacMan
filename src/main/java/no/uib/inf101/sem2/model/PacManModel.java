@@ -1,5 +1,8 @@
 package no.uib.inf101.sem2.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import no.uib.inf101.sem2.controller.ControllablePacManModel;
 import no.uib.inf101.sem2.controller.PacManController;
 import no.uib.inf101.sem2.ghost.Ghost;
@@ -18,7 +21,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     PacMan movingPacMan;
 
     GhostFactory ghostFactory;
-    Ghost movingGhost;
+    //Ghost movingGhost;
+    List<Ghost> ghosts;
 
     GameState gameState;
     PacDirection pacDirection;    
@@ -27,7 +31,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     PacManController controller;
     int score = 0;
 
-    public PacManModel(PacManBoard board, PacManFactory pacManFactory, GhostFactory ghostFactory) {
+    public PacManModel(PacManBoard board, PacManFactory pacManFactory, GhostFactory ghostFactory,int numGhosts) {
         this.board = board;
         this.pacManFactory = pacManFactory;
         this.ghostFactory = ghostFactory;
@@ -38,8 +42,12 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         this.ghostDirection = GhostDirection.CENTER;
 
         this.movingPacMan = pacManFactory.getNext();
-        this.movingGhost = ghostFactory.getNext();
+        this.ghosts = new ArrayList<>();
+        for (int i = 0; i < numGhosts; i++) {
+            this.ghosts.add(ghostFactory.getNext());
+        }
     }
+    
 
   
     @Override
@@ -63,41 +71,43 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
 
     @Override
-    public CellPosition getTileOnMovingGhost() {
-        return this.movingGhost.getPos();
+    public Iterable<CellPosition> getTilesOnMovingGhosts() {
+        List<CellPosition> positions = new ArrayList<>();
+        for (Ghost ghost : ghosts) {
+            positions.add(ghost.getPos());
+        }
+        return positions;
     }
 
     @Override
-    public void move(PacDirection pacDirection, GhostDirection ghostDirection) {
+    public void movePacDirection(PacDirection pacDirection) {
         switch(pacDirection){
             case LEFT -> movePacMan(0,-1);
             case RIGHT -> movePacMan(0,1);
             case UP -> movePacMan(-1,0);
             case DOWN -> movePacMan(1,0);
         }
-            
-        interactWith(getTileOnMovingPacMan());
-
-        // randomize the direction of the Ghost by calling setDirectionGhost
-        // and then move the ghost
-        randomizeGhostDirection();
+    }
+    
+    @Override 
+    public void moveGhostDirection(GhostDirection ghostDirection) {
+        for (Ghost ghost : ghosts) {
+            randomizeGhostDirection(ghost);
+            switch(ghostDirection){
+                case LEFT -> moveGhost(0,-1);
+                case RIGHT -> moveGhost(0,1);
+                case UP -> moveGhost(-1,0);
+                case DOWN -> moveGhost(1,0);
+            }}
     }
 
-
-    private void randomizeGhostDirection(){
+    private void randomizeGhostDirection(Ghost ghost){
         int random = (int) (Math.random() * 4);
         switch(random){
-            case 0 -> setDirectionGhost(GhostDirection.LEFT);
-            case 1 -> setDirectionGhost(GhostDirection.RIGHT);
-            case 2 -> setDirectionGhost(GhostDirection.UP);
-            case 3 -> setDirectionGhost(GhostDirection.DOWN);
-        }
-    
-        switch(ghostDirection){
-            case LEFT -> moveGhost(0,-1);
-            case RIGHT -> moveGhost(0,1);
-            case UP -> moveGhost(-1,0);
-            case DOWN -> moveGhost(1,0);
+            case 0 -> setDirectionGhost(ghost, GhostDirection.LEFT);
+            case 1 -> setDirectionGhost(ghost, GhostDirection.RIGHT);
+            case 2 -> setDirectionGhost(ghost, GhostDirection.UP);
+            case 3 -> setDirectionGhost(ghost, GhostDirection.DOWN);
         }
     }
     
@@ -106,15 +116,29 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         // moves the piece around on the board
         // returns a boolean indicating whether the move was successful or not.
 
-            PacMan newPiece = this.movingPacMan.shiftedBy(dx, dy);
-            if (this.legalPlacementPac(newPiece)) {
-                this.movingPacMan = newPiece;
-                this.pacDirection = this.getPacDirection();
+        PacMan newPiece = this.movingPacMan.shiftedBy(dx, dy);
+        if (this.legalPlacementPac(newPiece)) {
+            this.movingPacMan = newPiece;
+            this.pacDirection = this.getPacDirection();
         }            
 }       
         
-    
+ /*    public void moveGhost(Ghost ghost, int dx, int dy) {
+        Ghost newGhost = ghost.shiftedBy(dx, dy);
+        if (legalPlacementGhost(newGhost)){
+            ghost.setPos(newGhost.getPos());
+        }
+    } */
     @Override
+    public void moveGhost(int dx, int dy) {
+        for (Ghost ghost : this.ghosts) {
+            Ghost newGhost = ghost.shiftedBy(dx, dy);
+            if (legalPlacementGhost(newGhost)) {
+                ghost.setPosition(newGhost.getPos());
+            }
+        }
+}
+   /*  @Override
     public void moveGhost(int dx, int dy) {
         
         Ghost newGhost = this.movingGhost.shiftedBy(dx, dy);
@@ -123,7 +147,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             ghostDirection = this.getGhostDirection();
         }
     }
-
+ */
 
     private void interactWith(CellPosition pos) {
         // checks what is in the position of the pacman
@@ -131,38 +155,54 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         // if it is a ghost, the game is over
         
         if (board.get(pos) == 'o') {
-            board.removePellet(pos);
+            board.removePelletAndFruit(pos);
             // update score
-            //controller.updateScore();
+            updateScore(10);
+            
+            checkIfAllPelletsAreEaten();
         }
-        System.out.println("Pacman: " + movingPacMan.getPos());
-        System.out.println("Pacman value: " + movingPacMan.getPos().hashCode());
-        System.out.println("Ghost: " + movingGhost.getPos());
-        System.out.println("Ghost value: " + movingGhost.getPos().hashCode());
-        if (pacAndGhostCollide()) {
+        
+        if (ghostsAndPacCollide()) {
             setGameState(GameState.GAME_OVER); 
-            System.out.println("Pacman: " + movingPacMan.getPos());
-            System.out.println("Pacman value: " + movingPacMan.getPos().hashCode());
-            System.out.println("Ghost: " + movingGhost.getPos());
-            System.out.println("Ghost value: " + movingGhost.getPos().hashCode());
                 }
+
+        // if pac hits fruit -> update score
+        if (board.get(pos) == 'f') {
+            board.removePelletAndFruit(pos);
+            // update score
+            updateScore(50);
+        }
     }
 
-    private boolean pacAndGhostCollide() {
-        // if the pacman and the ghost move past eachother, the game is over
-
-        if (movingPacMan.getPos().row() == movingGhost.getPos().row() && movingPacMan.getPos().col() == movingGhost.getPos().col()) {
-            return true;
-        }
-        else if (pacDirection.getNeighbor(getTileOnMovingPacMan()) == getTileOnMovingGhost()) {
-            return true;
-        }
-        else if (ghostDirection.getNeighbor(getTileOnMovingGhost()) == getTileOnMovingPacMan()) {
-            return true;
+    private boolean ghostsAndPacCollide(){
+        for (Ghost ghost : ghosts) {
+            if (ghost.getPos().equals(movingPacMan.getPos())) {
+                return true;
+            }
         }
         return false;
     }
 
+    private void checkIfAllPelletsAreEaten() {
+        // checks if all pellets are eaten
+        // if so, the game is won
+        if (allPelletsEaten()) {
+            setGameState(GameState.GAME_WON);
+        }
+    }
+    public boolean allPelletsEaten() {
+        for (GridCell<Character> cell : getTilesOnPellets()) {
+            if (cell.value() == 'o') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void updateScore(int points) {
+            this.score += points;
+        }
+    
 
 
     private PacDirection getPacDirection() {
@@ -178,10 +218,9 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         if (!board.positionIsOnGrid(newPac.getPos())) {
                 return false;
             }
-        else if (board.get(newPac.getPos()) != ' ' && board.get(newPac.getPos()) != 'o') {
+        else if (board.get(newPac.getPos()) != ' ' && board.get(newPac.getPos()) != 'o' && board.get(newPac.getPos()) != 'f') {
                 return false;
             }
-        
         return true;
     }
 
@@ -191,7 +230,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         if (!board.positionIsOnGrid(newGhost.getPos())) {
                 return false;
             }
-        else if (board.get(newGhost.getPos()) != ' ' && board.get(newGhost.getPos()) != 'o' ) {
+        else if (board.get(newGhost.getPos()) != ' ' && board.get(newGhost.getPos()) != 'o' && board.get(newGhost.getPos()) != 'f' ) {
                 return false;
             }
         return true;
@@ -200,7 +239,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public Integer getTimerDelay() {
-        return 200;
+        return 100;
     }
 
     @Override
@@ -210,7 +249,9 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public void clockTick() {
-        move(pacDirection, ghostDirection);
+        movePacDirection(pacDirection);
+        interactWith(getTileOnMovingPacMan());
+        moveGhostDirection(ghostDirection);
     }
 
     @Override
@@ -220,14 +261,13 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         // if not, don´t change direction
 
         if (legalPlacementPac(this.movingPacMan.shiftedBy(direction.getDx(), direction.getDy()))){
-            this.pacDirection = direction;
-        
-    } }
+            this.pacDirection = direction;   
+    }}
 
-    private void setDirectionGhost(GhostDirection direction) {
-        if ((legalPlacementGhost(this.movingGhost.shiftedBy(direction.getDx(), direction.getDy()))) && (!newGhostDirectionIsOppositeDirection(direction) || ghostLockedInCorner())){
+    @Override
+    public void setDirectionGhost(Ghost ghost, GhostDirection direction) {
+        if ((legalPlacementGhost(ghost.shiftedBy(direction.getDx(), direction.getDy()))) && (!newGhostDirectionIsOppositeDirection(direction) || ghostLockedInCorner(ghost))){
             this.ghostDirection = direction;
-        
     }}
     
     private boolean newGhostDirectionIsOppositeDirection(GhostDirection direction) {
@@ -254,47 +294,44 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
                 }
             }
         }
-        
         return false;
-}
+    }
 
-
-    private boolean ghostLockedInCorner() {
+    private boolean ghostLockedInCorner(Ghost ghost) {
         // if all the surrounding directions except for backwards are walls, return true
         // if not, return false
         switch(ghostDirection){
             case LEFT -> {
-                if (!legalPlacementGhost(movingGhost.shiftedBy(0,-1)) 
-                && !legalPlacementGhost(movingGhost.shiftedBy(1,0)) 
-                && !legalPlacementGhost(movingGhost.shiftedBy(-1,0))){
+                if (!legalPlacementGhost(ghost.shiftedBy(0,-1)) 
+                && !legalPlacementGhost(ghost.shiftedBy(1,0)) 
+                && !legalPlacementGhost(ghost.shiftedBy(-1,0))){
                     return true;
                 }
             }
             case RIGHT -> {
-                if (!legalPlacementGhost(movingGhost.shiftedBy(0,1)) 
-                && !legalPlacementGhost(movingGhost.shiftedBy(1,0)) 
-                && !legalPlacementGhost(movingGhost.shiftedBy(-1,0))){
+                if (!legalPlacementGhost(ghost.shiftedBy(0,1)) 
+                && !legalPlacementGhost(ghost.shiftedBy(1,0)) 
+                && !legalPlacementGhost(ghost.shiftedBy(-1,0))){
                     return true;
                 }
             }
             case UP -> {
-                if (!legalPlacementGhost(movingGhost.shiftedBy(0,-1)) 
-                && !legalPlacementGhost(movingGhost.shiftedBy(0,1)) 
-                && !legalPlacementGhost(movingGhost.shiftedBy(-1,0))){
+                if (!legalPlacementGhost(ghost.shiftedBy(0,-1)) 
+                && !legalPlacementGhost(ghost.shiftedBy(0,1)) 
+                && !legalPlacementGhost(ghost.shiftedBy(-1,0))){
                     return true;
                 }
             }
             case DOWN -> {
-                if (!legalPlacementGhost(movingGhost.shiftedBy(0,-1)) 
-                && !legalPlacementGhost(movingGhost.shiftedBy(0,1)) 
-                && !legalPlacementGhost(movingGhost.shiftedBy(1,0))){
+                if (!legalPlacementGhost(ghost.shiftedBy(0,-1)) 
+                && !legalPlacementGhost(ghost.shiftedBy(0,1)) 
+                && !legalPlacementGhost(ghost.shiftedBy(1,0))){
                     return true;
                 }
             }
         }
         return false;  
     }
-
 
     @Override
     public void setGameState(GameState gameState) {
@@ -303,5 +340,13 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
 
 
+    @Override
+    public Object getScore() {
+        return this.score;    
+    }
+
+    private void getNewGhost() {
+        this.ghosts.add(ghostFactory.getNext());
+    }
 
 }

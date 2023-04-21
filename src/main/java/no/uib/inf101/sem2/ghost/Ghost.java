@@ -27,6 +27,9 @@ public class Ghost {
         return pos;
     }
 
+    public void setPosition(CellPosition pos) {
+        this.pos = pos;
+    }
 
 
 }

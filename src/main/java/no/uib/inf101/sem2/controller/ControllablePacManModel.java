@@ -1,5 +1,6 @@
 package no.uib.inf101.sem2.controller;
 
+import no.uib.inf101.sem2.ghost.Ghost;
 import no.uib.inf101.sem2.model.GameState;
 import no.uib.inf101.sem2.model.GhostDirection;
 import no.uib.inf101.sem2.model.PacDirection;
@@ -11,7 +12,9 @@ public interface ControllablePacManModel {
      * brukes for å gi retningskommando til movePacMan
      * tar inn en direction og kaller movePacMan med riktige parametre
      */
-    public void move(PacDirection pacdirection, GhostDirection ghostDirection);
+    //public void move(PacDirection pacdirection, GhostDirection ghostDirection);
+    public void movePacDirection(PacDirection pacdirection);
+    public void moveGhostDirection(GhostDirection ghostDirection);
     
     /* 
      * brukes for å flytte pacman rundt på brettet 
@@ -43,7 +46,13 @@ public interface ControllablePacManModel {
     /* 
      * setter retningen til PacMan
      */
-    void setDirection(PacDirection left);
+    void setDirection(PacDirection pacDirection);
+
+
+    /* 
+     * setter retningen til Ghost
+     */
+    void setDirectionGhost(Ghost ghost, GhostDirection ghostDirection);
 
     /* 
      * endrer gameState baser på input

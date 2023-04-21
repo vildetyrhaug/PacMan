@@ -27,7 +27,6 @@ public class PacManController implements java.awt.event.KeyListener {
         this.timer = new Timer(model.getTimerDelay(), this::clockTick);;
         this.timer.start();
 
-
         pacManView.addKeyListener(this);
 
     }

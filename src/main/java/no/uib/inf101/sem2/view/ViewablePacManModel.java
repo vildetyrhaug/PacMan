@@ -26,7 +26,7 @@ public interface ViewablePacManModel {
 
     /* henter posisjonen til Ghost
             */
-    CellPosition getTileOnMovingGhost();
+    Iterable<CellPosition> getTilesOnMovingGhosts();
     
         /* Itererer over alle flisene på brettet 
          * Mer presist, en metode som returnerer et objekt som, 
@@ -40,4 +40,9 @@ public interface ViewablePacManModel {
          * @return tilstanden til spillet
          */
     GameState getGameState();
+
+        /* 
+         * @return scoren til spilleren
+         */
+    Object getScore();
 }
