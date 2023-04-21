@@ -15,7 +15,6 @@ public class PacManBoard extends Grid<Character> {
     // ' ' is an empty space
     // 'P' is pac man
     // 'o' is a pellet
-    // 'H' is the Ghost-area entry
     // 'G' is the ghosts area
 
     public PacManBoard(int rows, int cols) {
@@ -27,9 +26,9 @@ public class PacManBoard extends Grid<Character> {
             for (int col = 0; col < cols; col++) {
                 if (row == 0 || row == rows - 1 || col == 0 || col == cols - 1) {
                     set(new CellPosition(row, col), '#');
-                } else {
-                    set(new CellPosition(row, col), 'o');
-                }
+                }  else {
+                    set(new CellPosition(row, col), ' ');
+                }  
             }
         }
 
@@ -38,19 +37,19 @@ public class PacManBoard extends Grid<Character> {
             "###################",
             "#     #     #     #",
             "# ### # ### # ### #",
-            "#        #        #",
+            "#   f    #    f   #",
             "## ## ##   ## ## ##",
             "#     ### ###     #",
             "# ### ##   ## ### #",
             "# ##           ## #",
             "# #  # ## ## #  # #",
-            "       #GGG#       ",
-            "# #  # ##### #  # #",
-            "# ##           ## #",
-            "# ### ##   ## ### #",
-            "#     ### ###     #",
+            "ooo    #GGG#       ",
+            "#o#  # ##### #  # #",
+            "#o##           ## #",
+            "#o### ##   ## ### #",
+            "#o    ### ###     #",
             "## ## ##   ## ## ##",
-            "#        #        #",
+            "#   f    #    f   #",
             "# ### # ### # ### #",
             "#     #     #     #",
             "###################"
@@ -62,16 +61,18 @@ public class PacManBoard extends Grid<Character> {
                 char mazeChar = mazeRow.charAt(col);
                 if (mazeChar == '#') {
                     set(new CellPosition(row, col), '#');
-                } else if (mazeChar == ' ') {
-                    set(new CellPosition(row, col), 'o');
+                } else if (mazeChar == 'o') {
+                    set(new CellPosition(row, col), 'o'); 
                 } else if (mazeChar == 'G') {
                     set(new CellPosition(row, col), 'G');
                 } else if (mazeChar == 'P') {
                     set(new CellPosition(row, col), 'P');
-                }
+                } else if (mazeChar == 'f') {
+                    set(new CellPosition(row, col), 'f');
+                } 
             }
         }
-        }
+    }
 
 
     public Iterable<GridCell<Character>> getPellets() {
@@ -84,7 +85,7 @@ public class PacManBoard extends Grid<Character> {
         return list;
     }
 
-    public void removePellet(CellPosition pos) {
+    public void removePelletAndFruit(CellPosition pos) {
         this.set(pos, ' ');
     }
 

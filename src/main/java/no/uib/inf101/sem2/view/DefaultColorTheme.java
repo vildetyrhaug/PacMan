@@ -8,17 +8,23 @@ public class DefaultColorTheme implements ColorTheme {
     private Color wallColor = Color.BLUE;
     private Color backgroundColor = Color.BLUE;
     private Color pacManColor = Color.YELLOW;
-    private Color pelletColor = Color.ORANGE;
-    private Color ghostColor = Color.RED, ghostColor2 = Color.CYAN, ghostColor3 = Color.GREEN;
+    private Color pelletColor = new Color(255, 0, 175);
+    private Color ghostColor = Color.CYAN, ghostColor2 = Color.GREEN;
+    private Color fruitColor = Color.RED;
 
-    private Color gameOverColor = Color.magenta;
-    private Color gameOverBackgroundColor = Color.CYAN;
+    private Color gameOverColor = Color.WHITE;
+    private Color gameOverBackgroundColor = new Color(0, 100, 255, 175);
 
-    private Color pauseColor = Color.magenta;
-    private Color pauseBackgroundColor = Color.CYAN;
+    private Color pauseColor = Color.WHITE;
+    private Color pauseBackgroundColor = new Color(0, 100, 255, 200);
 
-    private Color startColor = Color.magenta;
-    private Color startBackgroundColor = Color.CYAN;
+    private Color startColor = Color.WHITE;
+    private Color startBackgroundColor = new Color(0, 50, 255, 200);
+
+    private Color wonColor = Color.WHITE;
+    private Color wonBackgroundColor = new Color(0, 100, 255, 175);
+
+    private Color scoreColor = Color.BLUE.darker();
 
     @Override
     public Color getCellColor(Character c) {
@@ -59,11 +65,10 @@ public class DefaultColorTheme implements ColorTheme {
     @Override
     public Color getGhostColor() {
         // randomize ghost color
-        int random = (int) (Math.random() * 3);
+        int random = (int) (Math.random() * 2);
         Color color = switch(random) {
             case 0 -> ghostColor;
             case 1 -> ghostColor2;
-            case 2 -> ghostColor3;
             default -> throw new IllegalArgumentException(
                 "No available color for '" + random + "'");
           };
@@ -100,4 +105,24 @@ public class DefaultColorTheme implements ColorTheme {
     public Color getStartColor() {
         return startColor;
     }
+
+    @Override
+    public Color getFruitColor() {
+        return fruitColor;
+    }
+
+    @Override
+    public Color getScoreColor() {
+        return scoreColor;
+        }
+
+    @Override
+    public Color getWonBackgroundColor() {
+        return wonBackgroundColor;   
+    }
+
+    @Override
+    public Color getWonColor() {
+        return wonColor;
+     }
 }

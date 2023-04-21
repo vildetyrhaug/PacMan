@@ -72,5 +72,17 @@ public interface ColorTheme {
 
 
     Color getStartColor();
+
+
+    Color getFruitColor();
+
+
+    Color getScoreColor();
+
+
+    Color getWonBackgroundColor();
+
+
+    Color getWonColor();
  
 }

@@ -1,7 +1,9 @@
 package no.uib.inf101.sem2.view;
 
+import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridDimension;
@@ -28,50 +30,87 @@ public class CellPositionToPixelConverter {
     this.margin = margin;
   }
 
+      // beregner størrelsen til cellen
+  public double getCellWidth(){
+    double cellWidth = ((box.getWidth() - ((gd.cols()+1) * margin))/ gd.cols());
+    return cellWidth;
+  }
+  public double getCellHeight() {
+    double cellHeight = ((box.getHeight() - ((gd.rows()+1) * margin))/ gd.rows());
+    return cellHeight;
+  }    
+    // beregner posisjonen til cellen
+  public double getCellX(CellPosition cellPos) {
+    double cellX = box.getX() + margin + ((getCellWidth() + margin) * cellPos.col());
+    return cellX;
+  }
+  public double getCellY(CellPosition cellPos) {
+    double cellY = box.getY() + margin + ((getCellHeight() + margin) * cellPos.row());
+    return cellY;
+  }
+
+
+
   // Metode som returnerer et Rectangle2D -objekt
   public Rectangle2D getBoundsForCell(CellPosition cellPos) {
-    
-    // beregner størrelsen til cellen
-    double cellWidth = ((box.getWidth() - ((gd.cols()+1) * margin))/ gd.cols());
-    double cellHeight = ((box.getHeight() - ((gd.rows()+1) * margin))/ gd.rows());
-    
-    // beregner posisjonen til cellen
-    double cellX = box.getX() + margin + ((cellWidth + margin) * cellPos.col());
-    double cellY = box.getY() + margin + ((cellHeight + margin) * cellPos.row());
 
     // Tegner cellen
-    Rectangle2D rectangle2d = new Rectangle2D.Double(cellX, cellY, cellWidth, cellHeight); 
+    Rectangle2D cell = new Rectangle2D.Double(
+                getCellX(cellPos), 
+                getCellY(cellPos), 
+                getCellWidth(), 
+                getCellHeight()); 
 
-    return rectangle2d;
+    return cell;
   }
 
-  public Ellipse2D getBoundsForPacManOrGhost(CellPosition cellPos) {
-    // beregner størrelsen til cellen
-    double cellWidth = ((box.getWidth() - ((gd.cols()+1) * margin))/ gd.cols());
-    double cellHeight = ((box.getHeight() - ((gd.rows()+1) * margin))/ gd.rows());
-    
-    // beregner posisjonen til cellen
-    double cellX = box.getX() + margin + ((cellWidth + margin) * cellPos.col());
-    double cellY = box.getY() + margin + ((cellHeight + margin) * cellPos.row());
+  public Ellipse2D getBoundsForPacMan(CellPosition cellPos) {
 
     // Tegner cellen
-    Ellipse2D ellipse2d = new Ellipse2D.Double(cellX, cellY, cellWidth, cellHeight); 
+    Ellipse2D pacMan = new Ellipse2D.Double(
+              getCellX(cellPos), 
+              getCellY(cellPos), 
+              getCellHeight(), 
+              getCellWidth()); 
 
-    return ellipse2d;
+    return pacMan;
   }
+  public Ellipse2D getBoundsForGhosts(CellPosition cellPos) {
+
+    // Tegner cellen
+    Ellipse2D Ghost = new Ellipse2D.Double(
+              getCellX(cellPos), 
+              getCellY(cellPos), 
+              getCellHeight(), 
+              getCellWidth()); 
+
+    return Ghost;
+  }
+
   public Ellipse2D getBoundsForPellet(CellPosition cellPos) {
-    // beregner størrelsen til cellen
-    double cellWidth = ((box.getWidth() - ((gd.cols()+1) * margin))/ gd.cols());
-    double cellHeight = ((box.getHeight() - ((gd.rows()+1) * margin))/ gd.rows());
-    
-    // beregner posisjonen til pelleten
-    double cellX = (box.getX() + margin + ((cellWidth + margin) * cellPos.col()));
-    double cellY = (box.getY() + margin + ((cellHeight + margin) * cellPos.row()));
 
     // Tegner pelleten
-    Ellipse2D ellipse2d = new Ellipse2D.Double(cellX+cellWidth/3, cellY+cellHeight/3, cellWidth/3, cellHeight/3); 
+    Ellipse2D pellet = new Ellipse2D.Double(
+              getCellX(cellPos)+getCellWidth()/3, 
+              getCellY(cellPos)+getCellHeight()/3, 
+              getCellWidth()/3, 
+              getCellHeight()/3); 
 
-    return ellipse2d;
+    return pellet;
   }
+
+  public Ellipse2D getBoundsForFruit(CellPosition cellPos){
+    
+    // Tegner frukten
+    Ellipse2D fruit = new Ellipse2D.Double(
+              getCellX(cellPos)+getCellWidth()/4, 
+              getCellY(cellPos)+getCellHeight()/4, 
+              getCellWidth()/2, 
+              getCellHeight()/2); 
+    
+    return fruit;
+  }
+  
+
 }
 
