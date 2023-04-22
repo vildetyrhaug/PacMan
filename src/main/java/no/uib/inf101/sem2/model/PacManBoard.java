@@ -27,7 +27,7 @@ public class PacManBoard extends Grid<Character> {
                 if (row == 0 || row == rows - 1 || col == 0 || col == cols - 1) {
                     set(new CellPosition(row, col), '#');
                 }  else {
-                    set(new CellPosition(row, col), ' ');
+                    set(new CellPosition(row, col), 'o');
                 }  
             }
         }
@@ -61,7 +61,7 @@ public class PacManBoard extends Grid<Character> {
                 char mazeChar = mazeRow.charAt(col);
                 if (mazeChar == '#') {
                     set(new CellPosition(row, col), '#');
-                } else if (mazeChar == 'o') {
+                } else if (mazeChar == ' ') {
                     set(new CellPosition(row, col), 'o'); 
                 } else if (mazeChar == 'G') {
                     set(new CellPosition(row, col), 'G');

@@ -1,15 +1,18 @@
 package no.uib.inf101.sem2.ghost;
 
 import no.uib.inf101.sem2.grid.CellPosition;
+import no.uib.inf101.sem2.model.GhostDirection;
 
 public class Ghost {
     
-    
     CellPosition pos; 
+    GhostDirection direction;
 
     public Ghost(CellPosition pos) {
         // Oppretter en pacman
         this.pos = pos;
+        this.direction = GhostDirection.CENTER;
+
     }
 
     static Ghost newGhost(int row, int col){
@@ -31,5 +34,11 @@ public class Ghost {
         this.pos = pos;
     }
 
+    public GhostDirection getDirection() {
+        return direction;
+    }
 
+    public void setDirection(GhostDirection direction) {
+        this.direction = direction;
+    }
 }

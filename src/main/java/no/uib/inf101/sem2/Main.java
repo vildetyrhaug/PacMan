@@ -19,7 +19,7 @@ public class Main {
     PacManFactory pacManFactory = new RandomPacManFactory();
     GhostFactory ghostFactory = new RandomGhostFactory();
 
-    PacManModel model = new PacManModel(board, pacManFactory, ghostFactory, 3);
+    PacManModel model = new PacManModel(board, pacManFactory, ghostFactory, 2);
     PacManView view = new PacManView(model);
 
     PacManController controller = new PacManController(model, view);

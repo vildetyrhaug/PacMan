@@ -14,7 +14,7 @@ public interface ControllablePacManModel {
      */
     //public void move(PacDirection pacdirection, GhostDirection ghostDirection);
     public void movePacDirection(PacDirection pacdirection);
-    public void moveGhostDirection(GhostDirection ghostDirection);
+    public void moveGhostDirection();
     
     /* 
      * brukes for å flytte pacman rundt på brettet 
@@ -24,7 +24,7 @@ public interface ControllablePacManModel {
     /* 
      * flytter brikken rundt på brettet
      */
-    public void moveGhost(int dx, int dy);
+    public void moveGhost(Ghost ghost, int dx, int dy);
 
     /* 
      * @return en GameState som indikerer om spillet er aktivt, eller GameOver
