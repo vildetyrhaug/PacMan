@@ -100,7 +100,7 @@ public class PacManView extends JPanel {
     canvas.setFont(new Font("Monospaced", Font.BOLD, 30));
     Inf101Graphics.drawCenteredString(canvas, "Du har vunnet spillet!", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-100);
     Inf101Graphics.drawCenteredString(canvas, "Trykk på 'mellomrom' for å starte på nytt", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+100);
-    Inf101Graphics.drawCenteredString(canvas, "Trykk på 'p' for å pause spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+200);
+    Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å lukke spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+200);
   }
   
 
@@ -118,7 +118,8 @@ public class PacManView extends JPanel {
       Inf101Graphics.drawCenteredString(canvas, "Benytt piltastene for å bevege pac-man", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+200);
       Inf101Graphics.drawCenteredString(canvas, "Trykk på 'mellomrom' for å starte spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+300);
       Inf101Graphics.drawCenteredString(canvas, "Trykk på 'p' for å pause spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+400);
-    
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å lukke spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+500);
+
     }
     private void drawPauseScreen(Graphics2D canvas, double cellWidth, double cellHeight) {
       canvas.setColor(color.getPauseBackgroundColor());  
@@ -128,7 +129,7 @@ public class PacManView extends JPanel {
       Inf101Graphics.drawCenteredString(canvas, "Spillet er satt på pause", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-200);
       canvas.setFont(new Font("Monospaced", Font.BOLD, 30));
       Inf101Graphics.drawCenteredString(canvas, "Trykk på 'p' for å fortsette spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight);
-      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å avslutte spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+100);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å lukke spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+100);
 
     }
     private void drawGameOverScreen(Graphics2D canvas, double cellWidth, double cellHeight){
@@ -142,7 +143,7 @@ public class PacManView extends JPanel {
       
       canvas.setFont(new Font("Monospaced", Font.BOLD, 30));
       Inf101Graphics.drawCenteredString(canvas, "Trykk på 'space' for å starte på nytt", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+100);
-      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å avslutte", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight + 200);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å lukke spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight + 200);
     
     }
 

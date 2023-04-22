@@ -3,15 +3,20 @@ package no.uib.inf101.sem2.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import no.uib.inf101.sem2.controller.ControllablePacManModel;
 import no.uib.inf101.sem2.controller.PacManController;
 import no.uib.inf101.sem2.ghost.Ghost;
 import no.uib.inf101.sem2.ghost.GhostFactory;
+import no.uib.inf101.sem2.ghost.RandomGhostFactory;
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
 import no.uib.inf101.sem2.grid.GridDimension;
 import no.uib.inf101.sem2.pacMan.PacMan;
 import no.uib.inf101.sem2.pacMan.PacManFactory;
+import no.uib.inf101.sem2.pacMan.RandomPacManFactory;
+import no.uib.inf101.sem2.view.PacManView;
 import no.uib.inf101.sem2.view.ViewablePacManModel;
 
 public class PacManModel implements ViewablePacManModel, ControllablePacManModel {
@@ -90,7 +95,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     @Override 
     public void moveGhostDirection() {
         for (Ghost ghost : ghosts) {
-            System.out.println("moveGhostDirection:" + ghost.getDirection());
             randomizeGhostDirection(ghost);
             switch(ghost.getDirection()){
                 case LEFT -> moveGhost(ghost, 0,-1);
@@ -102,7 +106,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     private void randomizeGhostDirection(Ghost ghost){
         int random = (int) (Math.random() * 4);
-        System.out.println("randomizeGhostDirection: " + random);
         switch(random){ 
             case 0:
                 setDirectionGhost(ghost, GhostDirection.LEFT);
@@ -136,7 +139,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         Ghost newGhost = ghost.shiftedBy(dx, dy);
         if (legalPlacementGhost(newGhost)) {
                 ghost.setPosition(newGhost.getPos());
-                System.out.println("moveGhost: " + ghost + " " + newGhost +" " + newGhost.getDirection());
         }
         }
 
@@ -258,7 +260,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         if ((legalPlacementGhost(ghost.shiftedBy(direction.getDx(), direction.getDy()))) 
         && (!newGhostDirectionIsOppositeDirection(ghost, direction) || ghostLockedInCorner(ghost))){
             ghost.setDirection(direction);
-            System.out.println("setDirectionGhost:" + direction + ghost);
         }}
     
     private boolean newGhostDirectionIsOppositeDirection(Ghost ghost, GhostDirection direction) {
@@ -341,6 +342,25 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     private void getNewGhost() {
         this.ghosts.add(ghostFactory.getNext());
+    }
+
+    @Override
+    public void resetPacMan(){
+        PacManFactory pacManFactory = new RandomPacManFactory();
+        this.movingPacMan = pacManFactory.getNext();
+    }
+    @Override
+    public void resetGhosts(){
+        GhostFactory ghostFactory = new RandomGhostFactory();
+        this.ghosts = new ArrayList<>();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+    }
+    @Override
+    public void resetScore() {
+        this.score = 0;
     }
 
 }

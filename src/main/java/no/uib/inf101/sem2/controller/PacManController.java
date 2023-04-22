@@ -6,6 +6,7 @@ import javax.swing.Timer;
 
 import java.awt.event.ActionEvent;
 
+import no.uib.inf101.sem2.Main;
 import no.uib.inf101.sem2.model.GameState;
 import no.uib.inf101.sem2.model.PacDirection;
 import no.uib.inf101.sem2.view.PacManView;
@@ -15,7 +16,7 @@ public class PacManController implements java.awt.event.KeyListener {
     ControllablePacManModel model;
     PacManView pacManView;
     Timer timer;
-
+    Main main;
 
     public PacManController(ControllablePacManModel model, PacManView pacManView) {
         pacManView.setFocusable(true);
@@ -68,6 +69,11 @@ public class PacManController implements java.awt.event.KeyListener {
                                 case PAUSE_GAME -> model.setGameState(GameState.ACTIVE_GAME);
                             }   pacManView.repaint();
                         }
+                        case KeyEvent.VK_ESCAPE -> {
+                            // Escape was pressed
+                            // exit the game
+                            System.exit(0);
+                        }
                     }}
                 // GameState is START_GAME
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -75,14 +81,27 @@ public class PacManController implements java.awt.event.KeyListener {
                     // start the game
                     model.setGameState(GameState.ACTIVE_GAME);
                     pacManView.repaint();
-                    }
-            // GameState is GAME_OVER
-            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                }
+                else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    // Escape was pressed
+                    // exit the game
+                    System.exit(0);
+                }
+            }
+             // GameState is GAME_OVER
+        else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 // Space was pressed
                 // start new game
-
+                newGame();
                 updateTimer();
-            }}}
+            }
+        else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                // Escape was pressed
+                // exit the game
+                System.exit(0);
+            }
+        }
+        
 
     public void updateTimer() {
         int delay = model.getTimerDelay();
@@ -98,6 +117,27 @@ public class PacManController implements java.awt.event.KeyListener {
             pacManView.repaint();
         }
     }
+    public void newGame() {
+       
+
+        // Reset the game state
+        model.setGameState(GameState.ACTIVE_GAME);
+        
+        // Reset the moving Pac-Man's initial position
+        model.resetPacMan();
+            
+        // Reset the score
+        model.resetScore();
+
+        // Reset the ghosts
+        model.resetGhosts();
+            
+        // Start the timer again
+        timer.start();
+            
+        // Repaint the view
+        pacManView.repaint(); 
+        }
 
     @Override
     public void keyTyped(KeyEvent e) {

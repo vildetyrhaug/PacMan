@@ -58,6 +58,8 @@ public interface ControllablePacManModel {
      * endrer gameState baser på input
      */
     public void setGameState(GameState gameState);
-
+    public void resetPacMan();
+    public void resetScore();
+    public void resetGhosts();
     
 }
