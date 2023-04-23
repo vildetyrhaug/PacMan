@@ -413,6 +413,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         PacManFactory pacManFactory = new RandomPacManFactory();
         this.movingPacMan = pacManFactory.getNext();
     }
+    
     @Override
     public void resetGhosts(){
         GhostFactory ghostFactory = new RandomGhostFactory();
@@ -421,20 +422,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         getNewGhost();
         getNewGhost();
         getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-        getNewGhost();
-
     }
+
     @Override
     public void resetScore() {
         this.score = 0;
