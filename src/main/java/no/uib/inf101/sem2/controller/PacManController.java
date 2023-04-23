@@ -34,8 +34,16 @@ public class PacManController implements java.awt.event.KeyListener {
  
     @Override
         public void keyPressed(KeyEvent e) {
-            if (model.getGameState() != GameState.GAME_OVER){
-                if(model.getGameState()!= GameState.START_GAME){
+            switch(model.getGameState()){
+                case START_GAME -> {
+                    if (e.getKeyCode() == KeyEvent.VK_SPACE){
+                    model.setGameState(GameState.ACTIVE_GAME);
+                    pacManView.repaint();
+                    }}
+                    
+                case ACTIVE_GAME -> {
+                    // game is active
+                    // check which key was pressed
                     switch(e.getKeyCode()){
                         case KeyEvent.VK_LEFT -> {
                             // Left arrow was pressed
@@ -69,39 +77,39 @@ public class PacManController implements java.awt.event.KeyListener {
                                 case PAUSE_GAME -> model.setGameState(GameState.ACTIVE_GAME);
                             }   pacManView.repaint();
                         }
-                        case KeyEvent.VK_ESCAPE -> {
-                            // Escape was pressed
-                            // exit the game
-                            System.exit(0);
-                        }
-                    }}
-                // GameState is START_GAME
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    // Space was pressed
-                    // start the game
-                    model.setGameState(GameState.ACTIVE_GAME);
-                    pacManView.repaint();
+                }}
+                case PAUSE_GAME -> {
+                    // game is paused
+                    // check if the user wants to resume the game
+                    if(e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_SPACE){
+                        // resume the game
+                        model.setGameState(GameState.ACTIVE_GAME);
+                        pacManView.repaint();
+                    }
                 }
-                else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    // Escape was pressed
-                    // exit the game
-                    System.exit(0);
+                case GAME_OVER -> {
+                    // game is over
+                    // check if the user wants to restart the game
+                    if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                        newGame();
+                        updateTimer();
+                    }
+                }
+                case GAME_WON -> {
+                    // game is won
+                    // check if the user wants to restart the game
+                    if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                        // restart the game
+                        newGame();
+                        updateTimer();
+                    }
                 }
             }
-             // GameState is GAME_OVER
-        else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                // Space was pressed
-                // start new game
-                newGame();
-                updateTimer();
-            }
-        else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 // Escape was pressed
                 // exit the game
                 System.exit(0);
-            }
-        }
-        
+            }}
 
     public void updateTimer() {
         int delay = model.getTimerDelay();
@@ -131,6 +139,8 @@ public class PacManController implements java.awt.event.KeyListener {
 
         // Reset the ghosts
         model.resetGhosts();
+
+        model.resetBoard();
             
         // Start the timer again
         timer.start();

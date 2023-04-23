@@ -17,9 +17,12 @@ public class PacManBoard extends Grid<Character> {
     // 'o' is a pellet
     // 'G' is the ghosts area
 
+    long timeFruitEaten = 0;
+
     public PacManBoard(int rows, int cols) {
         
         super(rows, cols);
+
 
         // initialize the board with walls and empty spaces
         for (int row = 0; row < rows; row++) {
@@ -43,11 +46,11 @@ public class PacManBoard extends Grid<Character> {
             "# ### ##   ## ### #",
             "# ##           ## #",
             "# #  # ## ## #  # #",
-            "ooo    #GGG#       ",
-            "#o#  # ##### #  # #",
-            "#o##           ## #",
-            "#o### ##   ## ### #",
-            "#o    ### ###     #",
+            "       #GGG#       ",
+            "# #  # ##### #  # #",
+            "# ##           ## #",
+            "# ### ##   ## ### #",
+            "#     ### ###     #",
             "## ## ##   ## ## ##",
             "#   f    #    f   #",
             "# ### # ### # ### #",
@@ -86,7 +89,17 @@ public class PacManBoard extends Grid<Character> {
     }
 
     public void removePelletAndFruit(CellPosition pos) {
+        
+        if (get(pos) == 'f') {
+            timeFruitEaten = System.currentTimeMillis();
+            System.out.println("Fruit eaten at " + timeFruitEaten);
+        }
         this.set(pos, ' ');
+    }
+
+
+    public long getTimeFruitEaten() {
+        return timeFruitEaten;
     }
 
 }

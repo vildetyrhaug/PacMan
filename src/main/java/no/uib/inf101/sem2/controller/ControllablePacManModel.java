@@ -61,5 +61,6 @@ public interface ControllablePacManModel {
     public void resetPacMan();
     public void resetScore();
     public void resetGhosts();
+    public void resetBoard();
     
 }

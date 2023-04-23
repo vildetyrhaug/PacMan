@@ -6,15 +6,18 @@ import java.util.List;
 
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
+import no.uib.inf101.sem2.model.PacDirection;
 
 public class PacMan implements Iterable<GridCell<Character>> {
     // Representerer en pacman
 
     CellPosition pos; 
+    PacDirection direction;
 
     public PacMan(CellPosition pos) {
         // Oppretter en pacman
         this.pos = pos;
+        this.direction = PacDirection.CENTER;
     }
 
     static PacMan newPacMan(int row, int col){

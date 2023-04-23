@@ -3,8 +3,6 @@ package no.uib.inf101.sem2.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-
 import no.uib.inf101.sem2.controller.ControllablePacManModel;
 import no.uib.inf101.sem2.controller.PacManController;
 import no.uib.inf101.sem2.ghost.Ghost;
@@ -16,23 +14,26 @@ import no.uib.inf101.sem2.grid.GridDimension;
 import no.uib.inf101.sem2.pacMan.PacMan;
 import no.uib.inf101.sem2.pacMan.PacManFactory;
 import no.uib.inf101.sem2.pacMan.RandomPacManFactory;
-import no.uib.inf101.sem2.view.PacManView;
 import no.uib.inf101.sem2.view.ViewablePacManModel;
 
 public class PacManModel implements ViewablePacManModel, ControllablePacManModel {
 
-    PacManBoard board;
+    private PacManBoard board;
     PacManFactory pacManFactory;
-    PacMan movingPacMan;
+    private PacMan movingPacMan;
 
-    GhostFactory ghostFactory;
-    List<Ghost> ghosts;
+    private GhostFactory ghostFactory;
+    private List<Ghost> ghosts;
 
-    GameState gameState;
-    PacDirection pacDirection;    
+    private GameState gameState;
+    private PacDirection pacDirection;    
 
     PacManController controller;
-    int score = 0;
+    private int score = 0;
+
+    private boolean ghostsAreVulnerable = false;
+    private boolean pacManHasEatenFruit = false;
+
 
     public PacManModel(PacManBoard board, PacManFactory pacManFactory, GhostFactory ghostFactory,int numGhosts) {
         this.board = board;
@@ -47,8 +48,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         this.ghosts = new ArrayList<>();
         for (int i = 0; i < numGhosts; i++) {
             this.ghosts.add(ghostFactory.getNext());
-          
         }
+
     }
     
 
@@ -120,6 +121,12 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
                 setDirectionGhost(ghost, GhostDirection.DOWN);
                 break;
         }
+        if (ghostsAreVulnerable) {
+            ghost.setVulnerable(true);
+        }
+        else {
+            ghost.setVulnerable(false);
+        }
     } 
 
     @Override
@@ -155,18 +162,75 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             
             checkIfAllPelletsAreEaten();
         }
-        
-        if (ghostsAndPacCollide()) {
-            setGameState(GameState.GAME_OVER); 
-                }
-
-        // if pac hits fruit -> update score
+        // if pac hits fruit -> update score and make ghosts vulnerable
         if (board.get(pos) == 'f') {
             board.removePelletAndFruit(pos);
             // update score
             updateScore(50);
+            ghostsAreVulnerable = true;
+            pacManHasEatenFruit = true;
+
+            checkIfAllPelletsAreEaten();
         }
+        else if (ghostsAndPacCollide()) {
+            if (pacManHasEatenFruit && timeElapsedIsWithinBounds() && ghostsAreVulnerable) {
+                        for (Ghost ghost : ghosts) {
+                            if (ghost.getPos().equals(pos)) {
+                                ghosts.remove(ghost);
+                                updateScore(50);
+                                ghostsAreVulnerable = false;
+                                break;
+                            }
+                        }
+            } else {
+                setGameState(GameState.GAME_OVER);
+            }
+        }
+        }
+        /* Ghost vulnerableGhost = getVulnerableGhost();
+                if (vulnerableGhost != null) {
+                    ghosts.remove(vulnerableGhost);
+                    updateScore(50);
+                    ghostsAreVulnerable = false;
+                } */
+    
+        /* if (ghostsAndPacCollide()) {
+            setGameState(GameState.GAME_OVER); 
+                }
+ */
+        /* // if pac hits fruit -> update score
+        if (board.get(pos) == 'f') {
+            board.removePelletAndFruit(pos);
+            // update score
+            updateScore(50);
+        } */
+    
+
+    private boolean timeElapsedIsWithinBounds() {
+        long timeElapsed = System.currentTimeMillis() - board.getTimeFruitEaten();
+
+        if (timeElapsed < 10000) {
+            System.out.println("timeElapsedIsWithinBounds true: Time elapsed: " + timeElapsed);
+            return true;
+        } else {
+            System.out.println("timeElapsedIsWithinBounds false: Time elapsed: " + timeElapsed);
+            pacManHasEatenFruit = false;
+            ghostsAreVulnerable = false;
+            return false;
+        }
+    }    
+
+
+
+    private Ghost getVulnerableGhost() {
+        for (Ghost ghost : ghosts) {
+            if (ghost.isVulnerable()) {
+                return ghost;
+            }
+        }
+        return null;
     }
+
 
     private boolean ghostsAndPacCollide(){
         for (Ghost ghost : ghosts) {
@@ -357,10 +421,29 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         getNewGhost();
         getNewGhost();
         getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+        getNewGhost();
+
     }
     @Override
     public void resetScore() {
         this.score = 0;
     }
+    @Override
+    public void resetBoard() {
+        this.board = new PacManBoard(19, 19);
+    }
+
+
 
 }

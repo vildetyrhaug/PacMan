@@ -6,16 +6,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
-
 import javax.swing.JPanel;
 
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
-import no.uib.inf101.sem2.model.GameState;
 
 
 
@@ -111,14 +107,14 @@ public class PacManView extends JPanel {
       canvas.setFont(new Font("Monospaced", Font.BOLD, 70));
       Inf101Graphics.drawCenteredString(canvas, "PAC-MAN", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-400);
       canvas.setFont(new Font("Monospaced", Font.BOLD, 25));
-      Inf101Graphics.drawCenteredString(canvas, "Målet er å samle opp alle gule pellets på brettet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-200);
-      Inf101Graphics.drawCenteredString(canvas, "Pass deg for spøkelsene. Hvis de kommer borti deg", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-100);
-      Inf101Graphics.drawCenteredString(canvas, "så mister du ett liv. Du har tre liv.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight);
+      Inf101Graphics.drawCenteredString(canvas, "Du vinner når alle rosa pellets er samlet opp.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-200);
+      Inf101Graphics.drawCenteredString(canvas, "Pass deg for spøkelsene.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-100);
+      Inf101Graphics.drawCenteredString(canvas, "Kommer du borti spøkelset, er det Game Over.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight);
       Inf101Graphics.drawCenteredString(canvas, "Plukk opp frukten for å få ekstra poeng.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+100);
       Inf101Graphics.drawCenteredString(canvas, "Benytt piltastene for å bevege pac-man", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+200);
-      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'mellomrom' for å starte spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+300);
-      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'p' for å pause spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+400);
-      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å lukke spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+500);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'mellomrom' for å starte spillet.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+300);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'p' for å pause spillet.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+400);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å lukke spillet.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+500);
 
     }
     private void drawPauseScreen(Graphics2D canvas, double cellWidth, double cellHeight) {
@@ -126,23 +122,23 @@ public class PacManView extends JPanel {
       canvas.fill(new Rectangle2D.Double(OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight));
       canvas.setColor(color.getPauseColor()); 
       canvas.setFont(new Font("Monospaced", Font.BOLD, 50));
-      Inf101Graphics.drawCenteredString(canvas, "Spillet er satt på pause", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-200);
+      Inf101Graphics.drawCenteredString(canvas, "Spillet er satt på pause!", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-200);
       canvas.setFont(new Font("Monospaced", Font.BOLD, 30));
-      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'p' for å fortsette spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight);
-      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å lukke spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+100);
-
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'p' eller 'mellomrom'", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight);
+      Inf101Graphics.drawCenteredString(canvas, "for å fortsette spillet.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+100);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å lukke spillet.", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+200);
     }
     private void drawGameOverScreen(Graphics2D canvas, double cellWidth, double cellHeight){
       canvas.setColor(color.getGameOverBackgroundColor());  
       canvas.fill(new Rectangle2D.Double(OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight));
       canvas.setColor(color.getGameOverColor()); 
       canvas.setFont(new Font("Monospaced", Font.BOLD, 70));
-      Inf101Graphics.drawCenteredString(canvas, "GAME OVER", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-250);
+      Inf101Graphics.drawCenteredString(canvas, "GAME OVER!", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-250);
       canvas.setFont(new Font("Monospaced", Font.BOLD, 50));
       Inf101Graphics.drawCenteredString(canvas, "Du fikk " + pacManModel.getScore() + " poeng!", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight-100);
       
       canvas.setFont(new Font("Monospaced", Font.BOLD, 30));
-      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'space' for å starte på nytt", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+100);
+      Inf101Graphics.drawCenteredString(canvas, "Trykk på 'mellomrom' for å starte på nytt", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight+100);
       Inf101Graphics.drawCenteredString(canvas, "Trykk på 'esc' for å lukke spillet", OUTERMARGIN, TOPMARGIN, cellWidth, cellHeight + 200);
     
     }
@@ -215,11 +211,4 @@ public class PacManView extends JPanel {
       }
       }
     }
-
-
-
-    /* public void updateScore() {
-
-
-      }  */
 

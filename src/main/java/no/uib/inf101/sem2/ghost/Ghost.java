@@ -7,6 +7,7 @@ public class Ghost {
     
     CellPosition pos; 
     GhostDirection direction;
+    private boolean vulnerable = false;
 
     public Ghost(CellPosition pos) {
         // Oppretter en pacman
@@ -40,5 +41,12 @@ public class Ghost {
 
     public void setDirection(GhostDirection direction) {
         this.direction = direction;
+    }
+
+    public boolean isVulnerable() {
+        return vulnerable;
+    }
+    public void setVulnerable(boolean vulnerable) {
+        this.vulnerable = vulnerable;
     }
 }
