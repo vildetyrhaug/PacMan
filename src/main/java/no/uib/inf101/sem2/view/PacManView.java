@@ -12,12 +12,14 @@ import javax.swing.JPanel;
 
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
+import no.uib.inf101.sem2.model.PacManModel;
 
 
 
 public class PacManView extends JPanel {
     
-    private ViewablePacManModel pacManModel;
+    private static ViewablePacManModel pacManModel;
+    PacManModel model;
     private ColorTheme color;
     
     private static final double TOPMARGIN = 40;
@@ -195,11 +197,15 @@ public class PacManView extends JPanel {
     private static void drawPacMan(Graphics2D canvas, CellPosition posOfPacMan, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
         // itererer over cellene og tegner dem
         Ellipse2D pacMan = cellPosToPixConvert.getBoundsForPacMan(posOfPacMan);
-        Color cellColor = colorTheme.getPacManColor();
-          
-        canvas.setColor(cellColor);
+        //Color cellColor = colorTheme.getPacManColor();
+        // if (pacManModel.isInvincible()){
+        Color pacManColor = pacManModel.isInvincible() ? Color.BLUE : colorTheme.getPacManColor();
+        
+        canvas.setColor(pacManColor);
         canvas.fill(pacMan);
-            }
+        // Get the position of the pac-man in pixels
+
+      }
     
     private static void drawGhost(Graphics2D canvas, Iterable<CellPosition> posOfGhost, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
       for(CellPosition cell : posOfGhost){

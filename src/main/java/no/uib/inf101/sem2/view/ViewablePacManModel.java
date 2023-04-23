@@ -45,4 +45,7 @@ public interface ViewablePacManModel {
          * @return scoren til spilleren
          */
     Object getScore();
+
+
+    boolean isInvincible();
 }

@@ -102,6 +102,11 @@ public class PacManBoard extends Grid<Character> {
         return timeFruitEaten;
     }
 
+
+    public void setTimeFruitEaten(long currentTimeMillis) {
+        this.timeFruitEaten = currentTimeMillis;
+    }
+
 }
 
 

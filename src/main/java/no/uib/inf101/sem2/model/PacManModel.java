@@ -32,7 +32,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     private int score = 0;
 
     private boolean ghostsAreVulnerable = false;
-    private boolean pacManHasEatenFruit = false;
+    public boolean pacManHasEatenFruit = false;
 
 
     public PacManModel(PacManBoard board, PacManFactory pacManFactory, GhostFactory ghostFactory,int numGhosts) {
@@ -169,11 +169,19 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             updateScore(50);
             ghostsAreVulnerable = true;
             pacManHasEatenFruit = true;
+            // set a timer for ten seconds and then change ghostsAreVulnerable 
+            // and pacManHasEatenFruit to false
+            board.setTimeFruitEaten(System.currentTimeMillis());
+
 
             checkIfAllPelletsAreEaten();
         }
-        else if (ghostsAndPacCollide()) {
-            if (pacManHasEatenFruit && timeElapsedIsWithinBounds() && ghostsAreVulnerable) {
+        if (!timeElapsedIsWithinBounds()){
+            ghostsAreVulnerable = false;
+            pacManHasEatenFruit = false;
+        }
+        if (ghostsAndPacCollide()) {
+            if (pacManHasEatenFruit && ghostsAreVulnerable && timeElapsedIsWithinBounds() ) {
                         for (Ghost ghost : ghosts) {
                             if (ghost.getPos().equals(pos)) {
                                 ghosts.remove(ghost);
@@ -186,24 +194,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
                 setGameState(GameState.GAME_OVER);
             }
         }
+
         }
-        /* Ghost vulnerableGhost = getVulnerableGhost();
-                if (vulnerableGhost != null) {
-                    ghosts.remove(vulnerableGhost);
-                    updateScore(50);
-                    ghostsAreVulnerable = false;
-                } */
-    
-        /* if (ghostsAndPacCollide()) {
-            setGameState(GameState.GAME_OVER); 
-                }
- */
-        /* // if pac hits fruit -> update score
-        if (board.get(pos) == 'f') {
-            board.removePelletAndFruit(pos);
-            // update score
-            updateScore(50);
-        } */
     
 
     private boolean timeElapsedIsWithinBounds() {
@@ -413,7 +405,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         PacManFactory pacManFactory = new RandomPacManFactory();
         this.movingPacMan = pacManFactory.getNext();
     }
-    
+
     @Override
     public void resetGhosts(){
         GhostFactory ghostFactory = new RandomGhostFactory();
@@ -433,6 +425,14 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         this.board = new PacManBoard(19, 19);
     }
 
-
+    @Override
+    public boolean isInvincible() {
+        if (pacManHasEatenFruit){
+            System.out.println("isInvincible: " + pacManHasEatenFruit);
+        
+            return true;
+        }
+        return false;
+    }
 
 }
