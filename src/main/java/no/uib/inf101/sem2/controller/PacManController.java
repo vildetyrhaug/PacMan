@@ -6,7 +6,6 @@ import javax.swing.Timer;
 
 import java.awt.event.ActionEvent;
 
-import no.uib.inf101.sem2.Main;
 import no.uib.inf101.sem2.model.GameState;
 import no.uib.inf101.sem2.model.PacDirection;
 import no.uib.inf101.sem2.view.PacManView;
@@ -23,7 +22,6 @@ public class PacManController implements java.awt.event.KeyListener {
         this.pacManView = pacManView;
         this.model = model;
 
-        //timer
         this.timer = new Timer(model.getTimerDelay(), this::clockTick);;
         this.timer.start();
 
@@ -119,7 +117,6 @@ public class PacManController implements java.awt.event.KeyListener {
     public void clockTick(ActionEvent e) {
         if (model.getGameState() == GameState.ACTIVE_GAME) {
             model.clockTick();
-            // kall til hjelpemetoden som oppdaterer delay for timeren
             updateTimer();
             pacManView.repaint();
         }

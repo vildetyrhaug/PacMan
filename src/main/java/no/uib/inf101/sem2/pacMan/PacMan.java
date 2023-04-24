@@ -1,16 +1,11 @@
 package no.uib.inf101.sem2.pacMan;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import no.uib.inf101.sem2.grid.CellPosition;
-import no.uib.inf101.sem2.grid.GridCell;
 import no.uib.inf101.sem2.model.PacDirection;
 import no.uib.inf101.sem2.model.PacManBoard;
 import no.uib.inf101.sem2.model.PacManModel;
 
-public class PacMan implements Iterable<GridCell<Character>> {
+public class PacMan {
     // Representerer en pacman
 
     CellPosition pos; 
@@ -36,15 +31,6 @@ public class PacMan implements Iterable<GridCell<Character>> {
         return copy;
     }
 
-    @Override
-    public Iterator<GridCell<Character>> iterator() {
-        // returnerer en iterator over alle cellene i pacman
-        
-        List<GridCell<Character>> list = new ArrayList<>();
-        list.add(new GridCell<Character>(pos, 'P'));
-        return list.iterator();
-    }
-
     public CellPosition getPos() {
         return pos;
     }
@@ -52,6 +38,4 @@ public class PacMan implements Iterable<GridCell<Character>> {
     public void setPosition(CellPosition pos) {
         this.pos = pos;
     }
-
-
 }

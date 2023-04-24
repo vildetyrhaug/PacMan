@@ -85,5 +85,6 @@ public class MoveGhostDirectionTest {
 
         // Check that the ghost's direction has been updated to the right
         assertEquals(GhostDirection.RIGHT, ghost3.getDirection());
+        assertNotEquals(initialDirection, ghost3.getDirection());
     }
 }

@@ -30,14 +30,6 @@ public class Ghost {
     public CellPosition getPos() {
         return pos;
     }
-    
-  /*   public int getDx() {
-        return direction.getDx();
-    }
-
-    public int getDy() {
-        return direction.getDy();
-    } */
 
     public void setPosition(CellPosition pos) {
         this.pos = pos;

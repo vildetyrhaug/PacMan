@@ -6,6 +6,7 @@ public interface PacManFactory {
     
     /* 
      * @return en ny Pac-man
+     * @param pos er celleposisjonen til den nye pac-man
      */
     PacMan getNext(CellPosition pos);
 }
