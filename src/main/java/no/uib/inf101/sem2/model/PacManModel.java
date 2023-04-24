@@ -47,10 +47,14 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         this.movingPacMan = pacManFactory.getNext(board.getPacManStartPosition());
         this.ghosts = new ArrayList<>();
         for (int i = 0; i < numGhosts; i++) {
-            this.ghosts.add(ghostFactory.getNext());
+            this.ghosts.add(ghostFactory.getNext(board.getGhostStartPosition));
         }
     }
     
+    public PacManModel(PacManBoard board) {
+        this.board = board;
+        }
+
     @Override
     public GridDimension getDimension() {
         return this.board;
@@ -85,8 +89,9 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         switch(pacDirection){
             case LEFT -> movePacMan(0,-1);
             case RIGHT -> movePacMan(0,1);
-            case UP -> movePacMan(-1,0);
             case DOWN -> movePacMan(1,0);
+            case UP -> movePacMan(-1,0);
+            case CENTER -> movePacMan(0,0);
         }
     }
     
@@ -103,7 +108,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         }
     }
 
-    private void randomizeGhostDirection(Ghost ghost){
+    public void randomizeGhostDirection(Ghost ghost){
         int random = (int) (Math.random() * 4);
         switch(random){ 
             case 0:
@@ -239,7 +244,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         return true;
     }
 
-    public void updateScore(int points) {
+    private void updateScore(int points) {
         this.score += points;
     }
     
@@ -251,19 +256,24 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         if (!board.positionIsOnGrid(newPac.getPos())) {
                 return false;
             }
-        else if (board.get(newPac.getPos()) != ' ' && board.get(newPac.getPos()) != 'o' && board.get(newPac.getPos()) != 'f') {
+        else if (board.get(newPac.getPos()) != ' ' 
+            && board.get(newPac.getPos()) != 'o' 
+            && board.get(newPac.getPos()) != 'f') {
                 return false;
             }
         return true;
     }
 
-    private boolean legalPlacementGhost(Ghost newGhost) {
+    public boolean legalPlacementGhost(Ghost newGhost) {
         // sjekker om en ghost kan plasseres på brettet
         // returnerer true hvis det er lovlig, false ellers
         if (!board.positionIsOnGrid(newGhost.getPos())) {
                 return false;
             }
-        else if (board.get(newGhost.getPos()) != ' ' && board.get(newGhost.getPos()) != 'o' && board.get(newGhost.getPos()) != 'f' ) {
+        else if (board.get(newGhost.getPos()) != ' ' 
+            && board.get(newGhost.getPos()) != 'o' 
+            && board.get(newGhost.getPos()) != 'f'
+            && board.get(newGhost.getPos()) != 'G' ) {
                 return false;
             }
         return true;
@@ -300,7 +310,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         // sjekker om det er lovlig å plassere spøkelse på ny posisjon
         // hvis ja -> oppdaterer retningen til spøkelse
         if ((legalPlacementGhost(ghost.shiftedBy(direction.getDx(), direction.getDy()))) 
-        && (!newGhostDirectionIsOppositeDirection(ghost, direction) || ghostLockedInCorner(ghost))){
+        && (!newGhostDirectionIsOppositeDirection(ghost, direction) 
+        || ghostLockedInCorner(ghost))){
             ghost.setDirection(direction);
         }}
     
@@ -384,13 +395,27 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
 
     private void getNewGhost() {
-        this.ghosts.add(ghostFactory.getNext());
+        CellPosition ghostPosition; 
+        if (board.getGhostStartPosition() != null){
+            ghostPosition = board.getGhostStartPosition();
+        }
+        else {
+            ghostPosition = new CellPosition(board.rows()/2-1, board.cols()/2);
+        }
+        this.ghosts.add(ghostFactory.getNext(ghostPosition));
     }
 
     @Override
     public void resetPacMan(){
         PacManFactory pacManFactory = new RandomPacManFactory();
-        this.movingPacMan = pacManFactory.getNext(board.getPacManStartPosition());
+        CellPosition pacManPosition;
+        if (board.getPacManStartPosition() != null){
+            pacManPosition = board.getPacManStartPosition();
+        }
+        else {
+            pacManPosition = new CellPosition(board.rows()/2, board.cols()/2);
+        }
+        this.movingPacMan = pacManFactory.getNext(pacManPosition);
     }
 
     @Override

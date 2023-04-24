@@ -15,10 +15,13 @@ public class PacManBoard extends Grid<Character> {
     // ' ' is an empty space
     // 'P' is where Pac-Man starts the game
     // 'o' is a pellet
-    // 'G' is the ghosts area
+    // 'H' is the ghosts area
+    // 'f' is a fruit
+    // 'G' is a ghosts starts position
 
     long timeFruitEaten = 0;
     CellPosition pacManStartPosition;
+    CellPosition getGhostStartPosition;
 
     public PacManBoard(String[] maze) {
         
@@ -33,11 +36,16 @@ public class PacManBoard extends Grid<Character> {
                     set(new CellPosition(row, col), '#');
                 } else if (mazeChar == ' ') {
                     set(new CellPosition(row, col), 'o'); 
-                } else if (mazeChar == 'G') {
+                } else if (mazeChar == 'o') {
+                    set(new CellPosition(row, col), 'o');  
+                }else if (mazeChar == 'G') {
                     set(new CellPosition(row, col), 'G');
+                    getGhostStartPosition = new CellPosition(row, col);
                 } else if (mazeChar == 'P') {
                     set(new CellPosition(row, col), 'P');
                     pacManStartPosition = new CellPosition(row, col);
+                } else if (mazeChar == 'H') {
+                    set(new CellPosition(row, col), 'H');
                 } else if (mazeChar == 'f') {
                     set(new CellPosition(row, col), 'f');
                 } 
@@ -77,7 +85,12 @@ public class PacManBoard extends Grid<Character> {
         
         return pacManStartPosition;     
     }
+
+    public CellPosition getGhostStartPosition() {
+        return getGhostStartPosition;
+    }
 }
+
 
 
     

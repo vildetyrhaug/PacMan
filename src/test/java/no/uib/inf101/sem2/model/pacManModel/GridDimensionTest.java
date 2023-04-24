@@ -1,9 +1,11 @@
-package no.uib.inf101.sem2.model;
+package no.uib.inf101.sem2.model.pacManModel;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import no.uib.inf101.sem2.ghost.RandomGhostFactory;
+import no.uib.inf101.sem2.model.PacManBoard;
+import no.uib.inf101.sem2.model.PacManModel;
 import no.uib.inf101.sem2.pacMan.RandomPacManFactory;
 
 public class GridDimensionTest {

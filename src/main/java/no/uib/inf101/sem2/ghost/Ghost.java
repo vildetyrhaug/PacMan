@@ -16,8 +16,8 @@ public class Ghost {
 
     }
 
-    static Ghost newGhost(int row, int col){
-        return new Ghost(new CellPosition((row/2), col/2));
+    static Ghost newGhost(CellPosition pos) {
+        return new Ghost(pos);
     }
 
     public Ghost shiftedBy(int dx, int dy) {
@@ -30,6 +30,14 @@ public class Ghost {
     public CellPosition getPos() {
         return pos;
     }
+    
+  /*   public int getDx() {
+        return direction.getDx();
+    }
+
+    public int getDy() {
+        return direction.getDy();
+    } */
 
     public void setPosition(CellPosition pos) {
         this.pos = pos;
