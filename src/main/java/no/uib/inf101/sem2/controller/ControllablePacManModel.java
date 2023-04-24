@@ -1,6 +1,7 @@
 package no.uib.inf101.sem2.controller;
 
 import no.uib.inf101.sem2.ghost.Ghost;
+import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.model.GameState;
 import no.uib.inf101.sem2.model.GhostDirection;
 import no.uib.inf101.sem2.model.PacDirection;
@@ -91,5 +92,11 @@ public interface ControllablePacManModel {
      * resetter brettet til startposisjon
      */
     void resetBoard();
+
+    /* 
+     * sjekker hva som er i posisjonen pacman er flyttet til 
+     * @param pos er posisjonen pacman er flyttet til
+     */
+    void interactWith(CellPosition pos);
     
 }

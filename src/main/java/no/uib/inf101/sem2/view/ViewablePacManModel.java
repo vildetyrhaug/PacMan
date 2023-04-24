@@ -47,7 +47,7 @@ public interface ViewablePacManModel {
         /* 
          * @return scoren til spilleren
          */
-    Object getScore();
+    int getScore();
 
         /* 
          * @return true hvis pacMan kan spise spøkelser 

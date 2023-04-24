@@ -36,11 +36,35 @@ public class Main {
       "#     #     #     #",
       "###################"
     });
+    // make a bigger board with symmetrical walls
+    PacManBoard board2 = new PacManBoard(
+      new String[]{
+      "#########################",
+      "#     #     #     #     #",
+      "# ### # ### # ### # ### #",
+      "#   f    #     #     f  #",
+      "## ## ## # ### # ## ## ##",
+      "#     ## #     # ##     #",
+      "# ### ## # ### # ## ### #",
+      "# ##                 ## #",
+      "# #  # ## ##### ## #  # #",
+      "       #   GGG   #       ",
+      "# #  # ## ##### ## #  # #",
+      "# ##        P        ## #",
+      "# ### ## # ### # ## ### #",
+      "#     ## #     # ##     #",
+      "## ## ## # ### # ## ## ##",
+      "#   f    #     #    f   #",
+      "# ### # ### # ### # ### #",
+      "#     #     #     #     #",
+      "#########################"
+      });
+      
 
     PacManFactory pacManFactory = new RandomPacManFactory();
     GhostFactory ghostFactory = new RandomGhostFactory();
 
-    PacManModel model = new PacManModel(board, pacManFactory, ghostFactory, 4);
+    PacManModel model = new PacManModel(board, pacManFactory, ghostFactory, 5);
     PacManView view = new PacManView(model);
 
     PacManController controller = new PacManController(model, view);

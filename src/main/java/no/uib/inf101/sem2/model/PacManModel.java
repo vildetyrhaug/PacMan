@@ -31,7 +31,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     PacManController controller;
     private int score = 0;
 
-    private boolean ghostsAreVulnerable = false;
+    public boolean ghostsAreVulnerable = false;
     public boolean pacManHasEatenFruit = false;
 
 
@@ -53,6 +53,9 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     
     public PacManModel(PacManBoard board) {
         this.board = board;
+
+        this.gameState = GameState.START_GAME;
+
         }
 
     @Override
@@ -152,8 +155,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         }
     }
 
-
-    private void interactWith(CellPosition pos) {
+    @Override
+    public void interactWith(CellPosition pos) {
         // sjekker hva som er på posisjonen til pacman
         // hvis det er en pellet -> fjern pellet, oppdater score og sjekk om alle pellets er spist
         // hvis det er frukt -> fjern frukt, oppdater score og gjør spøkelsene sårbare i ti sekunder 
@@ -184,7 +187,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
                         for (Ghost ghost : ghosts) {
                             if (ghost.getPos().equals(pos)) {
                                 ghosts.remove(ghost);
-                                updateScore(50);
+                                updateScore(200);
                                 ghostsAreVulnerable = false;
                                 pacManHasEatenFruit = false;
                                 break;
@@ -388,9 +391,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         this.gameState = gameState;
     }
 
-
     @Override
-    public Object getScore() {
+    public int getScore() {
         return this.score;    
     }
 
@@ -466,4 +468,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         return false;
     }
 
+    public void setPacManPosition(CellPosition position) {
+        this.movingPacMan.setPosition(position);
+    }
 }

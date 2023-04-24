@@ -32,23 +32,31 @@ public class PacManBoard extends Grid<Character> {
             String mazeRow = maze[row];
             for (int col = 0; col < mazeRow.length(); col++) {
                 char mazeChar = mazeRow.charAt(col);
-                if (mazeChar == '#') {
-                    set(new CellPosition(row, col), '#');
-                } else if (mazeChar == ' ') {
-                    set(new CellPosition(row, col), 'o'); 
-                } else if (mazeChar == 'o') {
-                    set(new CellPosition(row, col), 'o');  
-                }else if (mazeChar == 'G') {
-                    set(new CellPosition(row, col), 'G');
-                    getGhostStartPosition = new CellPosition(row, col);
-                } else if (mazeChar == 'P') {
-                    set(new CellPosition(row, col), 'P');
-                    pacManStartPosition = new CellPosition(row, col);
-                } else if (mazeChar == 'H') {
-                    set(new CellPosition(row, col), 'H');
-                } else if (mazeChar == 'f') {
-                    set(new CellPosition(row, col), 'f');
-                } 
+                switch(mazeChar){
+                    case '#':
+                        set(new CellPosition(row, col), '#');
+                        break;
+                    case ' ':
+                        set(new CellPosition(row, col), 'o');
+                        break;
+                    case 'o':
+                        set(new CellPosition(row, col), 'o');
+                        break;
+                    case 'G':
+                        set(new CellPosition(row, col), 'G');
+                        getGhostStartPosition = new CellPosition(row, col);
+                        break;
+                    case 'P':
+                        set(new CellPosition(row, col), 'P');
+                        pacManStartPosition = new CellPosition(row, col);
+                        break;
+                    case 'H':
+                        set(new CellPosition(row, col), 'H');
+                        break;
+                    case 'f':
+                        set(new CellPosition(row, col), 'f');
+                        break;
+                }
             }
         }
     }
