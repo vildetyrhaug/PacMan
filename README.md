@@ -1,18 +1,14 @@
 # Mitt program
 
-Se [oppgaveteksten](./OPPGAVETEKST.md) til semesteroppgave 2. Denne README -filen kan du endre som en del av dokumentasjonen til programmet, hvor du beskriver for en bruker hvordan programmet skal benyttes.
+PAC-MAN 
 
-Fremgangsmåte: 
-1. Lag labyrinten, og få den til å vises. 
-2. Lag pac-man figuren.
-3. Bevege på pac-man og passe på at han ikke kan gå inn i vegger
-4. Plasser mynter på alle ledige plasser i labyrinten 
-5. La pac-man plukke opp myntene, og pass på at de forsvinner. 
-5. Poengsummen øker når myntene plukkes opp. 
-6. Lag spøkelser. 
-8. Spøkelser kan ikke gå gjennom vegger. 
-7. La pac-man miste ett liv og starte på nytt hvis han blir truffet av et spøkelse.
-8. Lag items (frukt og andre gjenstander)
- 
-Ekstra:
-- Animasjon av pac-man som beveger seg til de ulike sidene og åpner og lukker munnen. 
+Målet med spillet er å flytte pac-man rundt på brettet så han får spist alle de rosa pelletene som er plassert rundt på hele brettet, samtidig som man rømmer fra spøkelsene. Man samler poeng underveis i spillet. Pelletene gir 10 poeng hver. Den røde frukten kan spises og gir 50 poeng hver. Frukten gjør at pac-man blir blå og gjør at han kan spise spøkelsene i de neste 10 sekundene. Spiser man et spøkelse får man 200 poeng! Hvis pac-man ikke har spist en frukt og er blå, så må man passe seg for spøkelsene. Kommer man borti et spøkelse da er det GAME OVER. 
+
+For å styre pac-man rundt på brettet bruker man piltastene. 
+Du kan starte spillet ved å trykke 'mellomromstast' eller 'enter' og pause ved å trykke 'p'. 
+Hvis du ønsker å forlate spillet kan du alltid trykke 'esc'. 
+Hvis du har vunnet eller tapt spillet, kan du trykke 'mellomromstast' for å starte ett nytt spill. 
+
+Lykke til! 
+
+Her er en video som demonstrerer spillet: https://www.kapwing.com/videos/6446bfb27a369e0025f9c83a
