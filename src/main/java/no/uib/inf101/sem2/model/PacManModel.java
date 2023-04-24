@@ -166,9 +166,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
         if (board.get(pos) == 'o') {
             board.removePelletAndFruit(pos);
-            // update score
             updateScore(10);
-            
             checkIfAllPelletsAreEaten();
         }
         if (board.get(pos) == 'f') {
@@ -183,16 +181,16 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             pacManHasEatenFruit = false;
         }
         if (ghostsAndPacCollide()) {
-            if (pacManHasEatenFruit && ghostsAreVulnerable && timeElapsedIsWithinBounds() ) {
-                        for (Ghost ghost : ghosts) {
-                            if (ghost.getPos().equals(pos)) {
-                                ghosts.remove(ghost);
-                                updateScore(200);
-                                ghostsAreVulnerable = false;
-                                pacManHasEatenFruit = false;
-                                break;
-                            }
-                        }
+            if (pacManHasEatenFruit && ghostsAreVulnerable) {
+                for (Ghost ghost : ghosts) {
+                    if (ghost.getPos().equals(pos)) {
+                        ghosts.remove(ghost);
+                        updateScore(200);
+                        ghostsAreVulnerable = false;
+                        pacManHasEatenFruit = false;
+                        break;
+                    }
+                }
             } else {
                 setGameState(GameState.GAME_OVER);
             }
@@ -397,11 +395,11 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
 
     private void getNewGhost() {
-        CellPosition ghostPosition; 
+        CellPosition ghostPosition = null;
         if (board.getGhostStartPosition() != null){
             ghostPosition = board.getGhostStartPosition();
         }
-        else {
+        else if (board.getGhostStartPosition() == null) {
             ghostPosition = new CellPosition(board.rows()/2-1, board.cols()/2);
         }
         this.ghosts.add(ghostFactory.getNext(ghostPosition));
@@ -410,11 +408,11 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     @Override
     public void resetPacMan(){
         PacManFactory pacManFactory = new RandomPacManFactory();
-        CellPosition pacManPosition;
+        CellPosition pacManPosition = null;
         if (board.getPacManStartPosition() != null){
             pacManPosition = board.getPacManStartPosition();
         }
-        else {
+        else if (board.getPacManStartPosition() == null){
             pacManPosition = new CellPosition(board.rows()/2, board.cols()/2);
         }
         this.movingPacMan = pacManFactory.getNext(pacManPosition);
