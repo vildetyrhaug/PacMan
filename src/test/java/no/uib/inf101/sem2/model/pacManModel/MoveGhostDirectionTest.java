@@ -64,13 +64,26 @@ public class MoveGhostDirectionTest {
     @Test
     public void testRandomizeGhostDirection() {
         // Get the first ghost from the model
-        Ghost ghost = new Ghost(new CellPosition(2, 2));
-        GhostDirection initialDirection = ghost.getDirection();
+        Ghost ghost2 = new Ghost(new CellPosition(2, 2));
+        GhostDirection initialDirection = ghost2.getDirection();
 
         // Randomize the ghost's direction
-        model.randomizeGhostDirection(ghost);
+        model.randomizeGhostDirection(ghost2);
 
         // Check that the ghost's direction has been updated
-        assertNotEquals(initialDirection, ghost.getDirection());
+        assertNotEquals(initialDirection, ghost2.getDirection());
+    }
+
+    @Test
+    public void testSetDirectionGhost(){
+        // Get the first ghost from the model
+        Ghost ghost3 = new Ghost(new CellPosition(2, 2));
+        GhostDirection initialDirection = ghost3.getDirection();
+
+        // Set the ghost's direction to the right
+        model.setDirectionGhost(ghost3, GhostDirection.RIGHT);
+
+        // Check that the ghost's direction has been updated to the right
+        assertEquals(GhostDirection.RIGHT, ghost3.getDirection());
     }
 }
