@@ -51,66 +51,54 @@ public class CellPositionToPixelConverter {
 
 
 
-  // Metode som returnerer et Rectangle2D -objekt
   public Rectangle2D getBoundsForCell(CellPosition cellPos) {
-
     // Tegner cellen
     Rectangle2D cell = new Rectangle2D.Double(
                 getCellX(cellPos), 
                 getCellY(cellPos), 
                 getCellWidth(), 
                 getCellHeight()); 
-
     return cell;
   }
 
   public Ellipse2D getBoundsForPacMan(CellPosition cellPos) {
-
     // Tegner cellen
     Ellipse2D pacMan = new Ellipse2D.Double(
               getCellX(cellPos), 
               getCellY(cellPos), 
               getCellHeight(), 
               getCellWidth()); 
-
     return pacMan;
   }
   public Ellipse2D getBoundsForGhosts(CellPosition cellPos) {
-
     // Tegner cellen
     Ellipse2D Ghost = new Ellipse2D.Double(
               getCellX(cellPos), 
               getCellY(cellPos), 
               getCellHeight(), 
               getCellWidth()); 
-
     return Ghost;
   }
 
   public Ellipse2D getBoundsForPellet(CellPosition cellPos) {
-
     // Tegner pelleten
     Ellipse2D pellet = new Ellipse2D.Double(
               getCellX(cellPos)+getCellWidth()/3, 
               getCellY(cellPos)+getCellHeight()/3, 
               getCellWidth()/3, 
               getCellHeight()/3); 
-
     return pellet;
   }
 
   public Ellipse2D getBoundsForFruit(CellPosition cellPos){
-    
     // Tegner frukten
     Ellipse2D fruit = new Ellipse2D.Double(
               getCellX(cellPos)+getCellWidth()/4, 
               getCellY(cellPos)+getCellHeight()/4, 
               getCellWidth()/2, 
               getCellHeight()/2); 
-    
     return fruit;
   }
-  
 
 }
 

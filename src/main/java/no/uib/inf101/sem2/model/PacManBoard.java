@@ -23,8 +23,7 @@ public class PacManBoard extends Grid<Character> {
         
         super(rows, cols);
 
-
-        // initialize the board with walls and empty spaces
+        // initialiserer brettet med vegger og tomme plasser
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 if (row == 0 || row == rows - 1 || col == 0 || col == cols - 1) {
@@ -35,7 +34,7 @@ public class PacManBoard extends Grid<Character> {
             }
         }
 
-        // add the maze with walls, ghosts, and Pac-Man
+        // lager labyrinten med vegger, frukt, og plass for spøkelser. 
         String[] maze = {
             "###################",
             "#     #     #     #",
@@ -57,7 +56,7 @@ public class PacManBoard extends Grid<Character> {
             "#     #     #     #",
             "###################"
         };
-
+        
         for (int row = 0; row < maze.length; row++) {
             String mazeRow = maze[row];
             for (int col = 0; col < mazeRow.length(); col++) {
@@ -89,15 +88,13 @@ public class PacManBoard extends Grid<Character> {
     }
 
     public void removePelletAndFruit(CellPosition pos) {
-        
         if (get(pos) == 'f') {
             timeFruitEaten = System.currentTimeMillis();
-            System.out.println("Fruit eaten at " + timeFruitEaten);
         }
         this.set(pos, ' ');
     }
 
-
+    // tidspunktet frukten ble spist
     public long getTimeFruitEaten() {
         return timeFruitEaten;
     }

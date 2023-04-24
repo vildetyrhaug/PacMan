@@ -16,7 +16,6 @@ public class PacManController implements java.awt.event.KeyListener {
     ControllablePacManModel model;
     PacManView pacManView;
     Timer timer;
-    Main main;
 
     public PacManController(ControllablePacManModel model, PacManView pacManView) {
         pacManView.setFocusable(true);
@@ -126,8 +125,6 @@ public class PacManController implements java.awt.event.KeyListener {
         }
     }
     public void newGame() {
-       
-
         // Reset the game state
         model.setGameState(GameState.ACTIVE_GAME);
         
@@ -158,22 +155,4 @@ public class PacManController implements java.awt.event.KeyListener {
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
     }
-
-    /* public void updateScore() {
-        pacManView.updateScore();
-    } */
-
-
-
-
-   
-
-
-
-
-
-    
-
-
-   
 }

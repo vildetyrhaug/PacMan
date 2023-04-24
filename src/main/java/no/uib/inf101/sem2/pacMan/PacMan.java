@@ -38,7 +38,6 @@ public class PacMan implements Iterable<GridCell<Character>> {
         List<GridCell<Character>> list = new ArrayList<>();
         list.add(new GridCell<Character>(pos, 'P'));
         return list.iterator();
-        
     }
 
     public CellPosition getPos() {

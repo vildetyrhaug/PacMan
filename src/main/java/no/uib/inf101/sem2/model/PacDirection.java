@@ -39,6 +39,7 @@ public enum PacDirection {
 	 * 
 	 * @param pos position to start at
 	 * @return neighbouring position
+	 * @author hentet fra lab 5
 	 */
 	public CellPosition getNeighbor(CellPosition pos) {
 		return new CellPosition(pos.row() + dy, pos.col() + dx);

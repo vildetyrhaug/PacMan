@@ -10,21 +10,30 @@ public interface ControllablePacManModel {
 
     /* 
      * brukes for å gi retningskommando til movePacMan
-     * tar inn en direction og kaller movePacMan med riktige parametre
+     * @param pacdirection er hvilken retning pacman skal flyttes
      */
-    //public void move(PacDirection pacdirection, GhostDirection ghostDirection);
-    public void movePacDirection(PacDirection pacdirection);
-    public void moveGhostDirection();
+    void movePacDirection(PacDirection pacdirection);
+
+    /* 
+     * brukes for å gi retningskommando til moveGhost
+     * tildeler hvert ghost en retning og kaller moveGhost med riktige parametre
+     */
+    void moveGhostDirection();
     
     /* 
      * brukes for å flytte pacman rundt på brettet 
+     * @param dx er hvor mange rader pacman skal flyttes
+     * @param dy er hvor mange kolonner pacman skal flyttes
      */
-    public void movePacMan(int dx, int dy);
+    void movePacMan(int dx, int dy);
 
     /* 
-     * flytter brikken rundt på brettet
+     * flytter ghosts rundt på brettet
+     * param ghost er hvilken ghost som skal flyttes
+     * @param dx er hvor mange rader ghost skal flyttes
+     * @param dy er hvor mange kolonner ghost skal flyttes
      */
-    public void moveGhost(Ghost ghost, int dx, int dy);
+    void moveGhost(Ghost ghost, int dx, int dy);
 
     /* 
      * @return en GameState som indikerer om spillet er aktivt, eller GameOver
@@ -45,22 +54,42 @@ public interface ControllablePacManModel {
 
     /* 
      * setter retningen til PacMan
+     * @param pacDirection er hvilken retning pacman skal flyttes
      */
     void setDirection(PacDirection pacDirection);
 
 
     /* 
      * setter retningen til Ghost
+     * @param ghost er hvilken ghost som skal flyttes
+     * @param ghostDirection er hvilken retning ghost skal flyttes
      */
     void setDirectionGhost(Ghost ghost, GhostDirection ghostDirection);
 
     /* 
      * endrer gameState baser på input
+     * @param gameState er hvilken gameState som skal settes
      */
-    public void setGameState(GameState gameState);
-    public void resetPacMan();
-    public void resetScore();
-    public void resetGhosts();
-    public void resetBoard();
+    void setGameState(GameState gameState);
+
+    /* 
+     * resetter pacMan til startposisjon
+     */
+    void resetPacMan();
+
+    /* 
+     * resetter score til 0
+     */
+    void resetScore();
+
+    /* 
+     * resetter ghosts til startposisjon
+     */
+    void resetGhosts();
+
+    /* 
+     * resetter brettet til startposisjon
+     */
+    void resetBoard();
     
 }

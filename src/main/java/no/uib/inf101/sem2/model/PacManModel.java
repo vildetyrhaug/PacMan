@@ -26,7 +26,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     private List<Ghost> ghosts;
 
     private GameState gameState;
-    private PacDirection pacDirection;    
+    private PacDirection pacDirection;  
 
     PacManController controller;
     private int score = 0;
@@ -49,11 +49,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         for (int i = 0; i < numGhosts; i++) {
             this.ghosts.add(ghostFactory.getNext());
         }
-
     }
     
-
-  
     @Override
     public GridDimension getDimension() {
         return this.board;
@@ -102,7 +99,8 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
                 case RIGHT -> moveGhost(ghost, 0,1);
                 case UP -> moveGhost(ghost, -1,0);
                 case DOWN -> moveGhost(ghost, 1,0);
-            }}
+            }
+        }
     }
 
     private void randomizeGhostDirection(Ghost ghost){
@@ -139,7 +137,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             this.movingPacMan = newPiece;
             this.pacDirection = this.getPacDirection();
         }            
-}       
+    }       
 
     @Override
     public void moveGhost(Ghost ghost, int dx, int dy) {
@@ -147,14 +145,17 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         if (legalPlacementGhost(newGhost)) {
                 ghost.setPosition(newGhost.getPos());
         }
-        }
+    }
 
 
     private void interactWith(CellPosition pos) {
-        // checks what is in the position of the pacman
-        // if it is a pellet, it is removed from the board
-        // if it is a ghost, the game is over
-        
+        // sjekker hva som er på posisjonen til pacman
+        // hvis det er en pellet -> fjern pellet, oppdater score og sjekk om alle pellets er spist
+        // hvis det er frukt -> fjern frukt, oppdater score og gjør spøkelsene sårbare i ti sekunder 
+        // hvis spøkelsene og pacman kolliderer -> sjekk om pacman har spist frukt og om spøkelsene er sårbare
+        // hvis ja -> fjern spøkelsene og oppdater score
+        // hvis nei -> game over
+
         if (board.get(pos) == 'o') {
             board.removePelletAndFruit(pos);
             // update score
@@ -162,18 +163,11 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
             
             checkIfAllPelletsAreEaten();
         }
-        // if pac hits fruit -> update score and make ghosts vulnerable
         if (board.get(pos) == 'f') {
             board.removePelletAndFruit(pos);
-            // update score
             updateScore(50);
             ghostsAreVulnerable = true;
             pacManHasEatenFruit = true;
-            // set a timer for ten seconds and then change ghostsAreVulnerable 
-            // and pacManHasEatenFruit to false
-            board.setTimeFruitEaten(System.currentTimeMillis());
-
-
             checkIfAllPelletsAreEaten();
         }
         if (!timeElapsedIsWithinBounds()){
@@ -187,6 +181,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
                                 ghosts.remove(ghost);
                                 updateScore(50);
                                 ghostsAreVulnerable = false;
+                                pacManHasEatenFruit = false;
                                 break;
                             }
                         }
@@ -194,27 +189,22 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
                 setGameState(GameState.GAME_OVER);
             }
         }
-
-        }
+    }
     
-
+    // Sjekker om ti sekunder er gått siden pacman spiste frukt
     private boolean timeElapsedIsWithinBounds() {
         long timeElapsed = System.currentTimeMillis() - board.getTimeFruitEaten();
 
         if (timeElapsed < 10000) {
-            System.out.println("timeElapsedIsWithinBounds true: Time elapsed: " + timeElapsed);
             return true;
         } else {
-            System.out.println("timeElapsedIsWithinBounds false: Time elapsed: " + timeElapsed);
             pacManHasEatenFruit = false;
             ghostsAreVulnerable = false;
             return false;
         }
     }    
 
-
-
-    private Ghost getVulnerableGhost() {
+    public Ghost getVulnerableGhost() {
         for (Ghost ghost : ghosts) {
             if (ghost.isVulnerable()) {
                 return ghost;
@@ -222,7 +212,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
         }
         return null;
     }
-
 
     private boolean ghostsAndPacCollide(){
         for (Ghost ghost : ghosts) {
@@ -234,13 +223,14 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
 
     private void checkIfAllPelletsAreEaten() {
-        // checks if all pellets are eaten
-        // if so, the game is won
+        // sjekker om alle pellets er spist
+        // hvis ja -> game won
         if (allPelletsEaten()) {
             setGameState(GameState.GAME_WON);
         }
     }
-    public boolean allPelletsEaten() {
+
+    private boolean allPelletsEaten() {
         for (GridCell<Character> cell : getTilesOnPellets()) {
             if (cell.value() == 'o') {
                 return false;
@@ -250,18 +240,14 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
 
     public void updateScore(int points) {
-            this.score += points;
-        }
+        this.score += points;
+    }
     
-
-
     private PacDirection getPacDirection() {
         return pacDirection.currentDirection();
     }
     
     private boolean legalPlacementPac(PacMan newPac) {
-        // sjekker om en pacman kan plasseres på brettet
-        // returnerer true hvis det er lovlig, false ellers
         if (!board.positionIsOnGrid(newPac.getPos())) {
                 return false;
             }
@@ -303,23 +289,24 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public void setDirection(PacDirection direction) {
-        // check if neighbor is empty 
-        // if so, change direction
-        // if not, don´t change direction
-
+        // sjekker om det er lovlig å plassere pacman på ny posisjon
+        // hvis ja -> oppdaterer retningen til pacman
         if (legalPlacementPac(this.movingPacMan.shiftedBy(direction.getDx(), direction.getDy()))){
             this.pacDirection = direction;   
     }}
 
     @Override
     public void setDirectionGhost(Ghost ghost, GhostDirection direction) {
+        // sjekker om det er lovlig å plassere spøkelse på ny posisjon
+        // hvis ja -> oppdaterer retningen til spøkelse
         if ((legalPlacementGhost(ghost.shiftedBy(direction.getDx(), direction.getDy()))) 
         && (!newGhostDirectionIsOppositeDirection(ghost, direction) || ghostLockedInCorner(ghost))){
             ghost.setDirection(direction);
         }}
     
     private boolean newGhostDirectionIsOppositeDirection(Ghost ghost, GhostDirection direction) {
-        // if direction is the opposite of current direction, return false
+        // hvis ny retning er motsatt av retning spøkelse har, returner true
+        // hvis ikke, returner false
         switch(direction){
             case LEFT -> {
                 if (ghost.getDirection() == GhostDirection.RIGHT){
@@ -346,8 +333,9 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
 
     private boolean ghostLockedInCorner(Ghost ghost) {
-        // if all the surrounding directions except for backwards are walls, return true
-        // if not, return false
+        // sjekker om spøkelse er låst i hjørne
+        // hvis ja -> returner true
+        // hvis nei -> returner false
         switch(ghost.getDirection()){
             case LEFT -> {
                 if (!legalPlacementGhost(ghost.shiftedBy(0,-1)) 
@@ -386,7 +374,6 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public void setGameState(GameState gameState) {
-        System.out.println("Game state changed to " + gameState);
         this.gameState = gameState;
     }
 
@@ -427,9 +414,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public boolean isInvincible() {
-        if (pacManHasEatenFruit){
-            System.out.println("isInvincible: " + pacManHasEatenFruit);
-        
+        if (pacManHasEatenFruit){        
             return true;
         }
         return false;

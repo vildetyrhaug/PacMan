@@ -32,11 +32,10 @@ public class DefaultColorTheme implements ColorTheme {
             case '#' -> Color.BLUE;
             case ' ' -> Color.BLACK;
 
-
             default -> throw new IllegalArgumentException(
                 "No available color for '" + c + "'");
           };
-          return color;}
+        return color;}
 
     @Override
     public Color getFrameColor() {
@@ -73,7 +72,6 @@ public class DefaultColorTheme implements ColorTheme {
                 "No available color for '" + random + "'");
           };
           return color;
-
     }
 
     @Override
@@ -114,7 +112,7 @@ public class DefaultColorTheme implements ColorTheme {
     @Override
     public Color getScoreColor() {
         return scoreColor;
-        }
+    }
 
     @Override
     public Color getWonBackgroundColor() {
@@ -124,5 +122,5 @@ public class DefaultColorTheme implements ColorTheme {
     @Override
     public Color getWonColor() {
         return wonColor;
-     }
+    }
 }

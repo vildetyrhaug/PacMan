@@ -3,6 +3,8 @@ package no.uib.inf101.sem2.grid;
 import no.uib.inf101.sem2.model.PacDirection;
 
 /**
+ * @author hentet fra lab 5
+ * 
  * En CellPosition består av row og col.
  *
  * @param row  raden til cellen
