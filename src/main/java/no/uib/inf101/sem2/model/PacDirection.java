@@ -9,9 +9,10 @@ import no.uib.inf101.sem2.grid.CellPosition;
  */
 public enum PacDirection {
 	RIGHT(0, 1),
-	UP(-1, 0),
 	LEFT(0, -1),
-	DOWN(1, 0), 
+	DOWN(1, 0),
+	UP(-1,0),
+
 	CENTER(0, 0);
 
 	private final int dx;

@@ -23,7 +23,6 @@ public class PacManView extends JPanel {
     private static final double TOPMARGIN = 40;
     private static final double OUTERMARGIN = 5;
 
-    // KONSTRUKTØR
     public PacManView(ViewablePacManModel pacManModel) {
       this.setFocusable(true);
       this.setPreferredSize(new Dimension(800, 800));
@@ -149,7 +148,7 @@ public class PacManView extends JPanel {
 
     private static void drawBoard(Graphics2D canvas, Iterable<GridCell<Character>> gridCellCharacter, CellPositionToPixelConverter cellPosToPixConvert, ColorTheme colorTheme){
       for(GridCell<Character> cell : gridCellCharacter){
-          if (cell.value() == ' ' || cell.value() == '#' || cell.value() == 'P'){
+          if (cell.value() == ' ' || cell.value() == '#'){
               drawCells(canvas, cell, cellPosToPixConvert, colorTheme);
             }
           if (cell.value() == 'o'){

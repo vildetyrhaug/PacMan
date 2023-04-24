@@ -44,7 +44,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
         this.pacDirection = PacDirection.CENTER;
 
-        this.movingPacMan = pacManFactory.getNext();
+        this.movingPacMan = pacManFactory.getNext(board.getPacManStartPosition());
         this.ghosts = new ArrayList<>();
         for (int i = 0; i < numGhosts; i++) {
             this.ghosts.add(ghostFactory.getNext());
@@ -63,7 +63,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
 
     @Override
     public Iterable<GridCell<Character>> getTilesOnPellets() {
-        return this.board.getPellets();
+        return board.getPellets();
     }
 
     @Override
@@ -390,7 +390,7 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     @Override
     public void resetPacMan(){
         PacManFactory pacManFactory = new RandomPacManFactory();
-        this.movingPacMan = pacManFactory.getNext();
+        this.movingPacMan = pacManFactory.getNext(board.getPacManStartPosition());
     }
 
     @Override
@@ -409,7 +409,28 @@ public class PacManModel implements ViewablePacManModel, ControllablePacManModel
     }
     @Override
     public void resetBoard() {
-        this.board = new PacManBoard(19, 19);
+        this.board = new PacManBoard(
+            new String[]{
+            "###################",
+            "#     #     #     #",
+            "# ### # ### # ### #",
+            "#   f    #    f   #",
+            "## ## ##   ## ## ##",
+            "#     ### ###     #",
+            "# ### ##   ## ### #",
+            "# ##           ## #",
+            "# #  # ## ## #  # #",
+            "       #GGG#       ",
+            "# #  # ##### #  # #",
+            "# ##     P     ## #",
+            "# ### ##   ## ### #",
+            "#     ### ###     #",
+            "## ## ##   ## ## ##",
+            "#   f    #    f   #",
+            "# ### # ### # ### #",
+            "#     #     #     #",
+            "###################"}
+            );
     }
 
     @Override

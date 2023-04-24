@@ -31,7 +31,7 @@ public class DefaultColorTheme implements ColorTheme {
         Color color = switch(c) {
             case '#' -> Color.BLUE;
             case ' ' -> Color.BLACK;
-
+            
             default -> throw new IllegalArgumentException(
                 "No available color for '" + c + "'");
           };
