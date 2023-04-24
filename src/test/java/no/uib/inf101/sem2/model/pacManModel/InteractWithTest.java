@@ -2,21 +2,17 @@ package no.uib.inf101.sem2.model.pacManModel;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import no.uib.inf101.sem2.ghost.GhostFactory;
 import no.uib.inf101.sem2.ghost.RandomGhostFactory;
 import no.uib.inf101.sem2.grid.CellPosition;
 import no.uib.inf101.sem2.grid.GridCell;
 import no.uib.inf101.sem2.model.PacManBoard;
 import no.uib.inf101.sem2.model.PacManModel;
-import no.uib.inf101.sem2.pacMan.PacMan;
-import no.uib.inf101.sem2.pacMan.PacManFactory;
 import no.uib.inf101.sem2.pacMan.RandomPacManFactory;
 
 public class InteractWithTest {
@@ -30,8 +26,8 @@ public class InteractWithTest {
                 "       ", 
                 " f     ",
                 "       ",
-                "       ",
                 "    G  ",
+                "       ",
                 "       "
             });
         pacManModel = new PacManModel(board, new RandomPacManFactory(), new RandomGhostFactory(), 1);
@@ -102,15 +98,35 @@ public class InteractWithTest {
 
     @Test
     void testInteractWithGhost() {
-        // Choose a cell position with a ghost
-        CellPosition ghostPos = null; 
-
+        // Starts with a board with a fruit and a ghost
+        CellPosition fruitPos = null; 
         for (GridCell<Character> cell : pacManModel.getTilesOnBoard()) {
-            if (cell.value() == 'G') {
-                ghostPos = cell.pos();
+            if (cell.value() == 'f') {
+                fruitPos = cell.pos();
                 break;
             }
         }
+        // Check that there is at least one fruit on the board
+        assertNotNull(fruitPos);
+
+        // Set pacManHasEatenFruit to true
+        pacManModel.pacManHasEatenFruit = true;
+
+        // Interact with the fruit
+        pacManModel.interactWith(fruitPos);
+
+        // Choose a cell position with a ghost
+        CellPosition ghostPos = null; 
+
+        for (CellPosition cell : pacManModel.getTilesOnMovingGhosts()) {
+            if (cell != null) {
+                ghostPos = new CellPosition(cell.row(), cell.col());
+                break;
+            }
+        }
+        
+        // Check that there is at least one ghost on the board
+        assertNotNull(ghostPos);
 
         // Get the score before interacting with the ghost
         int scoreBefore = pacManModel.getScore();
@@ -118,21 +134,23 @@ public class InteractWithTest {
         pacManModel.setPacManPosition(ghostPos);
 
         // Set ghostsAreVulnerable and pacManHasEatenFruit to true
-        pacManModel.ghostsAreVulnerable = true;
         pacManModel.pacManHasEatenFruit = true;
-        
+        pacManModel.ghostsAreVulnerable = true;
+
         // Interact with the ghost
         pacManModel.interactWith(pacManModel.getTileOnMovingPacMan());
+        
+        // Check that the ghost was removed
+        for (CellPosition cell : pacManModel.getTilesOnMovingGhosts()) {
+            if (cell != null) {
+                assert false;
+            }
+        }
 
         // Check that the score was updated correctly
         assertEquals(scoreBefore + 200, pacManModel.getScore());
 
-        // Check that the ghost was removed
-        for (GridCell<Character> cell : pacManModel.getTilesOnBoard()) {
-            if (cell.value() == 'G') {
-                assert false;
-            }
-        }
+       
     }
 }
 
