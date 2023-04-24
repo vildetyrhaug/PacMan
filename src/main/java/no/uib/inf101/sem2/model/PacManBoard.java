@@ -88,9 +88,7 @@ public class PacManBoard extends Grid<Character> {
         this.timeFruitEaten = currentTimeMillis;
     }
 
-    public CellPosition getPacManStartPosition() {
-        //CellPosition pos = new CellPosition(this.rows()/2+2, this.cols()/2);
-        
+    public CellPosition getPacManStartPosition() {        
         return pacManStartPosition;     
     }
 
